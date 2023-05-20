@@ -1,0 +1,12 @@
+/.idea/
+*.tgz
+*.lock
+*.sh
+*.pid
+/.vscode/
+**/istio-*
+.terraform/
+*.tfstate*
+*.lock.hcl
+local-cluster-config
+kubeconfig*
