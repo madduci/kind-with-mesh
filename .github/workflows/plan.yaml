@@ -29,7 +29,7 @@ jobs:
       run: cd cluster && terraform init
 
     - name: Terraform Plan
-      run: cd cluster && terraform plan -out=plan.txt
+      run: cd cluster && terraform plan -no-color -out=plan.txt
 
     - name: Output Plan
       run: cat cluster/plan.txt
