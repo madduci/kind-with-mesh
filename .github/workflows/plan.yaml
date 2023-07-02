@@ -25,11 +25,11 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - run: cd cluster && terraform init
+    - name: Terraform Init
+      run: cd cluster && terraform init
 
-    - id: plan
-      run: cd cluster && terraform plan -no-color
+    - name: Terraform Plan
+      run: cd cluster && terraform plan -out=plan.txt
 
-    - run: echo ${{ steps.plan.outputs.stdout }}
-    - run: echo ${{ steps.plan.outputs.stderr }}
-    - run: echo ${{ steps.plan.outputs.exitcode }}
+    - name: Output Plan
+      run: cat plan.txt
