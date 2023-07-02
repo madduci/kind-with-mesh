@@ -32,4 +32,4 @@ jobs:
       run: cd cluster && terraform plan -out=plan.txt
 
     - name: Output Plan
-      run: cat plan.txt
+      run: cat cluster/plan.txt
