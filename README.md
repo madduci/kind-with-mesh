@@ -24,7 +24,7 @@ terraform apply
 There are variables that can be changed, they hold the following default values:
 
 ```hcl
-kubernetes_version=v1.26.6
+kubernetes_version=v1.27.3
 cluster_name=local-cluster
 ```
 
