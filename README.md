@@ -1,6 +1,6 @@
 # kind-with-istio
 
-This Terraform project allows an user create a local Kubernetes Cluster using the https://github.com/kubernetes-sigs/kind[Kubernetes-in-Docker Stack] (KIND) and configuring the Service Mesh with Istio.
+This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring the Service Mesh with Istio.
 
 The following steps are performed within the project:
 
@@ -9,7 +9,7 @@ The following steps are performed within the project:
 * A `kubeconfig` file is created locally in the project folder
 * The namespace `istio-system` with the basic Istio services is created
 
-In case of further operations/configuration of the Kind cluster, it's suggested to download the latest release of the `kind` tool from the https://github.com/kubernetes-sigs/kind/releases/latest[GitHub Repository].
+In case of further operations/configuration of the Kind cluster, it's suggested to download the latest release of the `kind` tool from the [GitHub Repository](https://github.com/kubernetes-sigs/kind/releases/latest).
 
 ## Creating the Cluster
 
