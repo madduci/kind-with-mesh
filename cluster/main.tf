@@ -34,11 +34,18 @@ resource "kind_cluster" "local_cluster" {
         host_port      = 443
         protocol       = "TCP"
       }
-      
+
       # Expose Port 15021 (Istio)
       extra_port_mappings {
         container_port = 30002
         host_port      = 15021
+        protocol       = "TCP"
+      }
+
+      # Expose Port 9879 (Cilium)
+      extra_port_mappings {
+        container_port = 30003
+        host_port      = 9879
         protocol       = "TCP"
       }
     }
@@ -46,5 +53,11 @@ resource "kind_cluster" "local_cluster" {
     node {
       role = "worker"
     }
+
+    containerd_config_patches = [
+      <<-YAML
+      networking.disableDefaultCNI = true
+      YAML
+    ]
   }
 }
