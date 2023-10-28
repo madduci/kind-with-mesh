@@ -44,6 +44,11 @@ resource "helm_release" "cilium" {
   }
 
   set {
+    name  = "ingressController.loadbalancerMode"
+    value = "shared"
+  }
+
+  set {
     name  = "ingressController.default"
     value = "true"
   }
