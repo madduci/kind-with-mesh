@@ -96,7 +96,7 @@ resource "helm_release" "istio_ingressgateway" {
     for_each = toset(var.local_node_ports_istio)
     content {
       name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].nodePort"
-      value = set.value.nodePort
+      value = set.value.nodePort # same port as in ../cluster/main.tf
     }
   }
 
