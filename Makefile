@@ -19,13 +19,14 @@ help:
 	$(info )		
 	$(info Available targets:)
 	$(info - create:  creates the cluster)
+	$(info - cilium:  configures Ciliu, in the cluster)
 	$(info - istio:   configures Istio in the cluster)
 	$(info - cleanup: deletes the cluster)
 
 .PHONY: create
 create:
 	cd cluster
-	terraform init
+	terraform init -upgrade
 	terraform apply -auto-approve
 
 .PHONY: cleanup
@@ -37,5 +38,11 @@ cleanup:
 .PHONY: istio
 istio:
 	cd istio
-	terraform init
+	terraform init -upgrade
+	terraform apply -auto-approve
+
+.PHONY: cilium
+cilium:
+	cd cilium
+	terraform init -upgrade
 	terraform apply -auto-approve

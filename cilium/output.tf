@@ -5,10 +5,10 @@ output "cilium_health_port" {
 
 output "cilium_http_port" {
   description = "The Cilium HTTP port"
-  value       = var.insecure_port.port
+  value       = var.secure_node_port.port
 }
 
 output "cilium_https_port" {
   description = "The Cilium HTTPS port"
-  value       = var.secure_port.port
+  value       = var.secure_node_port.port
 }

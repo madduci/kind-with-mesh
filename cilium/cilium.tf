@@ -30,12 +30,12 @@ resource "helm_release" "cilium" {
 
   set {
     name  = "ingressController.service.insecureNodePort"
-    value = var.insecure_port.nodePort
+    value = var.insecure_node_port.nodePort
   }
 
   set {
     name  = "ingressController.service.secureNodePort"
-    value = var.secure_port.nodePort
+    value = var.secure_node_port.nodePort
   }
 
   set {
