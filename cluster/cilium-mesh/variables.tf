@@ -7,7 +7,7 @@ variable "kubeconfig" {
 variable "cilium_version" {
   description = "The version of the Cilium Helm Chart to be installed"
   type        = string
-  default     = "1.14.3"
+  default     = "1.15.1"
 }
 
 variable "helm_repository" {
@@ -48,7 +48,7 @@ variable "insecure_node_port" {
     protocol   = "TCP"
     port       = 80
     targetPort = 80
-    nodePort   = 30000 # same port as in ../cluster/main.tf
+    nodePort   = 30000 # same port as in ../main.tf
   }
 }
 
@@ -66,6 +66,6 @@ variable "secure_node_port" {
     protocol   = "TCP"
     port       = 443
     targetPort = 443
-    nodePort   = 30001 # same port as in ../cluster/main.tf
+    nodePort   = 30001 # same port as in ../main.tf
   }
 }

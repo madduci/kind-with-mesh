@@ -17,9 +17,9 @@ In case of further operations/configuration of the Kind cluster, it's suggested 
 The following tools are required for this project:
 
 * `docker` (up and running)
-* `terraform` (1.0+)
+* `terraform` (1.6+) / `opentofu` (1.6+)
 * `helm` (3.0+)
-* `kind`
+* `kind` (0.22.0+)
 * `make`
 
 ## Creating the Cluster
@@ -35,8 +35,10 @@ terraform apply
 There are variables that can be changed, they hold the following default values:
 
 ```hcl
-kubernetes_version=v1.27.3
+kubernetes_version=v1.29.1
 cluster_name=local-cluster
+enable_istio=false
+enable_cilium=false
 ```
 
 ### Alternative: using Makefile
@@ -44,7 +46,7 @@ cluster_name=local-cluster
 To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
 
 ```sh
-make create
+make cluster
 ```
 
 If you want to delete the cluster, then type:
@@ -57,12 +59,12 @@ make cleanup
 
 Istio deploys a Service Mesh, offering the possibility to configure Mutual-TLS between Pods in a cluster, by defining some configurations. It helps to create an Ingress Object, exposing then ports 80, 443 and 15021 outside (as NodePort).
 
-The configuration of Istio can be performed with the command:
+The configuration of the cluster with Istio can be performed with the command:
 
 ```sh
 cd istio
 terraform init
-terraform apply
+terraform apply -var=enable_istio=true
 ```
 
 ### Alternative: using Makefile
@@ -70,10 +72,8 @@ terraform apply
 To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
 
 ```sh
-make istio
+make cluster-istio
 ```
-
-The cluster must have been already created with the command `make create`
 
 ## Configuring Cilium
 
@@ -84,7 +84,7 @@ The configuration of Cilium can be performed with the command:
 ```sh
 cd cilium
 terraform init
-terraform apply
+terraform apply -var=enable_cilium=true
 ```
 
 ### Alternative: using Makefile
@@ -92,7 +92,5 @@ terraform apply
 To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
 
 ```sh
-make cilium
+make cluster-cilium
 ```
-
-The cluster must have been already created with the command `make create`

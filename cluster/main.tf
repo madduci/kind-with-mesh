@@ -1,14 +1,3 @@
-terraform {
-  required_providers {
-    kind = {
-      source  = "tehcyx/kind"
-      version = "0.2.1"
-    }
-  }
-}
-
-provider "kind" {}
-
 resource "kind_cluster" "local_cluster" {
   name           = var.cluster_name
   node_image     = "kindest/node:${var.kubernetes_version}"
@@ -60,4 +49,16 @@ resource "kind_cluster" "local_cluster" {
       YAML
     ]
   }
+}
+
+module "istio" {
+  source = "./istio-mesh"
+  count = var.enable_istio ? 1 : 0
+  kubeconfig = kind_cluster.local_cluster.kubeconfig
+}
+
+module "cilium" {
+  source = "./cilium-mesh"
+  count = var.enable_cilium ? 1 : 0
+  kubeconfig = kind_cluster.local_cluster.kubeconfig
 }

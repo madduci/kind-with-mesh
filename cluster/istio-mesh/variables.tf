@@ -12,21 +12,21 @@ variable "local_node_ports_istio" {
     protocol   = "TCP"
     port       = 15021
     targetPort = 15021
-    nodePort   = 30002
+    nodePort   = 30002 # same port as in ../main.tf
     },
     {
       name       = "http2"
       protocol   = "TCP"
       port       = 80
       targetPort = 80
-      nodePort   = 30000
+      nodePort   = 30000 # same port as in ../main.tf
     },
     {
       name       = "https"
       protocol   = "TCP"
       port       = 443
       targetPort = 443
-      nodePort   = 30001
+      nodePort   = 30001 # same port as in ../main.tf
   }]
 }
 
@@ -45,7 +45,7 @@ variable "namespace" {
 variable "istio_version" {
   description = "The version of the Istio Helm Chart to be installed"
   type        = string
-  default     = "1.19.3"
+  default     = "1.20.3"
 }
 
 variable "helm_repository" {

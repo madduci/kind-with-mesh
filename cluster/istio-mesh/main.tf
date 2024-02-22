@@ -1,3 +1,12 @@
+resource "kubernetes_namespace_v1" "istio-system" {
+  metadata {
+    name = var.namespace
+  }
+}
+
+locals {
+  target_namespace = kubernetes_namespace_v1.istio-system.metadata[0].name
+}
 
 resource "helm_release" "istio_base" {
   name       = "istio-base"
