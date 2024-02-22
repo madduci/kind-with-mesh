@@ -9,7 +9,13 @@ permissions:
   contents: read
 
 jobs:
+
   terraform:
+    strategy:
+      fail-fast: false
+      matrix:
+        type: [plain, istio, cilium]
+
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
@@ -28,8 +34,17 @@ jobs:
     - name: Terraform Init
       run: cd cluster && terraform init
 
-    - name: Terraform Plan
+    - name: Terraform Plan (Plain)
+      if: matrix.type == 'plain'
       run: cd cluster && terraform plan -no-color > plan.txt
+
+    - name: Terraform Plan (With Istio)
+      if: matrix.type == 'istio'
+      run: cd cluster && terraform plan --var="enable_istio=true" -no-color > plan.txt
+
+    - name: Terraform Plan (With Cilium)
+      if: matrix.type == 'cilium'
+      run: cd cluster && terraform plan --var="enable_cilium=true" -no-color > plan.txt
 
     - name: Output Plan
       run: cat cluster/plan.txt

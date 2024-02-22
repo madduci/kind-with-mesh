@@ -23,26 +23,31 @@ help:
 	$(info - istio:   configures Istio in the cluster)
 	$(info - cleanup: deletes the cluster)
 
-.PHONY: create
-create:
+.PHONY: cluster
+cluster: init
 	cd cluster
-	terraform init -upgrade
-	terraform apply -auto-approve
+	terraform apply -auto-approve $$MESH_OPTS
+	cd -
+
+.PHONY: cluster-istio
+cluster-istio:
+	@echo "Creating the cluster with Istio enabled"
+	$(MAKE) cluster MESH_OPTS="--var=enable_istio=true"
+
+.PHONY: cluster-cilium
+cluster-cilium:
+	@echo "Creating the cluster with Cilium enabled"
+	$(MAKE) cluster MESH_OPTS="--var=enable_cilium=true"
+
+.PHONY: init
+init: 
+	cd cluster
+	terraform init -upgrade -reconfigure
+	cd -
 
 .PHONY: cleanup
 cleanup:
 	cd cluster
 	terraform destroy -auto-approve
 	rm -f local-cluster-config || echo "File not found, skipping"
-
-.PHONY: istio
-istio:
-	cd istio
-	terraform init -upgrade
-	terraform apply -auto-approve
-
-.PHONY: cilium
-cilium:
-	cd cilium
-	terraform init -upgrade
-	terraform apply -auto-approve
+	cd -
