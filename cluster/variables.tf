@@ -21,3 +21,9 @@ variable "enable_cilium" {
   default     = false
   description = "Defines if Cilium should be installed"
 }
+
+variable "enable_ingress_nginx" {
+  type        = bool
+  default     = false
+  description = "Defines if the NGINX Ingress should be installed"
+}

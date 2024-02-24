@@ -1,17 +1,18 @@
 variable "namespace" {
   description = "Namespace where to install the services"
   type        = string
-  default     = "istio-system"
+  default     = "ingress-nginx"
 }
 
 variable "helm_version" {
-  description = "The version of the Istio Helm Chart to be installed"
+  description = "The version of the NGINX Ingress Helm Chart to be installed"
   type        = string
-  default     = "1.20.3"
+  default     = "4.9.1"
 }
 
 variable "helm_repository" {
   type        = string
   description = "Helm Chart Repository URL"
-  default     = "https://istio-release.storage.googleapis.com/charts"
+  default     = "https://kubernetes.github.io/ingress-nginx"
 }
+
