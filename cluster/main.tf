@@ -15,7 +15,7 @@ resource "kind_cluster" "local_cluster" {
         kind: InitConfiguration
         nodeRegistration:
           kubeletExtraArgs:
-            node-labels: "scope=ingress"
+            node-labels: "ingress-ready=true"
         YAML 
       ]
 

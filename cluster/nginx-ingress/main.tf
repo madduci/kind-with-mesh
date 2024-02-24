@@ -17,8 +17,17 @@ resource "helm_release" "ingress_nginx" {
 
   values = [<<-YAML
     controller:
+      service:
+        type: NodePort
+      publishService:
+        enabled: false
+      ingressClassResource:
+        default: true
+      watchIngressWithoutClass: true
+      extraArgs: 
+        publish-status-address: localhost
       nodeSelector:
-        scope: ingress
+        ingress-ready: "true"
       tolerations:
         - key: "node-role.kubernetes.io/master"
           operator: "Equal"
@@ -28,16 +37,6 @@ resource "helm_release" "ingress_nginx" {
           effect: "NoSchedule"        
     YAML
   ]
-
-  set {
-    name  = "controller.service.type"
-    value = "NodePort"
-  }
-
-  set {
-    name = "controller.ingressClassResource.default"
-    value = "true"
-  }
 }
 
 
