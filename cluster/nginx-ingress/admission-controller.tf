@@ -109,8 +109,6 @@ resource "kubernetes_service_v1" "ingress_nginx_controller_admission" {
   }
 }
 
-
-
 resource "kubernetes_job_v1" "ingress_nginx_admission_create" {
   metadata {
     name      = "ingress-nginx-admission-create"
@@ -252,6 +250,5 @@ resource "kubernetes_validating_webhook_configuration_v1" "ingress_nginx_admissi
       resources    = ["ingresses"]
     }
     side_effects = "None"
-
   }
 }
