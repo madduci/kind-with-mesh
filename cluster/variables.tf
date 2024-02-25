@@ -10,6 +10,12 @@ variable "cluster_name" {
   description = "Defines the name of the cluster"
 }
 
+variable "kubeconfig_save_path" {
+  type        = string
+  description = "Defines the path to save the kubeconfig file"
+  default     = "kubeconfig"
+}
+
 variable "enable_istio" {
   type        = bool
   default     = false
@@ -20,10 +26,4 @@ variable "enable_cilium" {
   type        = bool
   default     = false
   description = "Defines if Cilium should be installed"
-}
-
-variable "enable_ingress_nginx" {
-  type        = bool
-  default     = false
-  description = "Defines if the NGINX Ingress should be installed"
 }

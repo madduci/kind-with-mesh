@@ -1,50 +1,37 @@
+locals {
+  controller_labels = {
+    "app.kubernetes.io/component" = "controller"
+    "app.kubernetes.io/instance"  = "ingress-nginx"
+    "app.kubernetes.io/name"      = "ingress-nginx"
+    "app.kubernetes.io/part-of"   = "ingress-nginx"
+    "app.kubernetes.io/version"   = "${var.ingress_nginx_version}"
+  }
+
+  admission_labels = {
+    "app.kubernetes.io/component" = "admission-webhook"
+    "app.kubernetes.io/instance"  = "ingress-nginx"
+    "app.kubernetes.io/name"      = "ingress-nginx"
+    "app.kubernetes.io/part-of"   = "ingress-nginx"
+    "app.kubernetes.io/version"   = "${var.ingress_nginx_version}"
+  }
+}
+
 resource "kubernetes_namespace_v1" "ingress_nginx" {
   metadata {
     name = var.namespace
+    labels = {
+      "app.kubernetes.io/instance" = "ingress-nginx"
+      "app.kubernetes.io/name"     = "ingress-nginx"
+    }
   }
 }
 
-resource "helm_release" "ingress_nginx" {
-  chart         = "ingress-nginx"
-  name          = "ingress-nginx"
-  repository    = var.helm_repository
-  version       = var.helm_version
-  namespace     = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
-  lint          = true
-  atomic        = true
-  wait          = true
-  wait_for_jobs = true
-
-  values = [<<-YAML
-    controller:
-      service:
-        type: NodePort
-      publishService:
-        enabled: false
-      ingressClassResource:
-        default: true
-      watchIngressWithoutClass: true
-      extraArgs: 
-        publish-status-address: localhost
-      nodeSelector:
-        ingress-ready: "true"
-      tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
-          effect: "NoSchedule"
-        - key: "node-role.kubernetes.io/control-plane"
-          operator: "Equal"
-          effect: "NoSchedule"        
-    YAML
-  ]
-}
-
-
-data "kubernetes_service_v1" "ingress_nginx" {
+resource "kubernetes_ingress_class_v1" "ingressclass_nginx" {
   metadata {
-    name      = "ingress-nginx-controller"
-    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
+    labels = local.controller_labels
+    name   = "nginx"
   }
-
-  depends_on = [helm_release.ingress_nginx]
+  spec {
+    controller = "k8s.io/ingress-nginx"
+  }
 }

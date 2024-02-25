@@ -1,7 +1,8 @@
 resource "kind_cluster" "local_cluster" {
-  name           = var.cluster_name
-  node_image     = "kindest/node:${var.kubernetes_version}"
-  wait_for_ready = true
+  name            = var.cluster_name
+  node_image      = "kindest/node:${var.kubernetes_version}"
+  wait_for_ready  = true
+  kubeconfig_path = var.kubeconfig_save_path
 
   kind_config {
     kind        = "Cluster"
