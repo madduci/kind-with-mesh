@@ -49,8 +49,11 @@ resource "kind_cluster" "local_cluster" {
       }
     }
 
-    node {
-      role = "worker"
+    dynamic "node" {
+      for_each = range(var.worker_nodes)
+      content {
+        role = "worker"
+      }
     }
 
     containerd_config_patches = [

@@ -163,6 +163,10 @@ resource "kubernetes_job_v1" "ingress_nginx_admission_create" {
       }
     }
   }
+  wait_for_completion = true
+  timeouts {
+    create = "120s"
+  }
 }
 
 resource "kubernetes_job_v1" "ingress_nginx_admission_patch" {
@@ -196,7 +200,7 @@ resource "kubernetes_job_v1" "ingress_nginx_admission_patch" {
               }
             }
           }
-          image             = "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20231226-1a7112e06@sha256:25d6a5f11211cc5c3f9f2bf552b585374af287b4debf693cacbe2da47daa5084"
+          image             = "registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.1@sha256:36d05b4077fb8e3d13663702fa337f124675ba8667cbd949c03a8e8ea6fa4366"
           image_pull_policy = "IfNotPresent"
           name              = "patch"
           security_context {
@@ -223,7 +227,11 @@ resource "kubernetes_job_v1" "ingress_nginx_admission_patch" {
     }
   }
 
-  depends_on = [kubernetes_job_v1.ingress_nginx_admission_create]
+  depends_on          = [kubernetes_job_v1.ingress_nginx_admission_create]
+  wait_for_completion = true
+  timeouts {
+    create = "120s"
+  }
 }
 
 resource "kubernetes_validating_webhook_configuration_v1" "ingress_nginx_admission" {

@@ -289,7 +289,7 @@ resource "kubernetes_deployment_v1" "ingress_nginx_controller" {
             name  = "LD_PRELOAD"
             value = "/usr/local/lib/libmimalloc.so"
           }
-          image             = "registry.k8s.io/ingress-nginx/controller:v1.9.6@sha256:1405cc613bd95b2c6edd8b2a152510ae91c7e62aea4698500d23b2145960ab9c"
+          image             = "registry.k8s.io/ingress-nginx/controller:v1.10.0@sha256:42b3f0e5d0846876b1791cd3afeb5f1cbbe4259d6f35651dcc1b5c980925379c"
           image_pull_policy = "IfNotPresent"
           lifecycle {
             pre_stop {

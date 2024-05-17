@@ -7,5 +7,5 @@ variable "namespace" {
 variable "ingress_nginx_version" {
   description = "The version of the NGINX Ingress to be installed"
   type        = string
-  default     = "1.9.6"
+  default     = "1.10.1"
 }
