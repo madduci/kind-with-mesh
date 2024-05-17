@@ -1,14 +1,15 @@
 # kind-with-mesh
 
-This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring the Service Mesh with Cilium and/or Istio.
+This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring optionally one between NGINX-Ingress (default), Istio or Cilium.
 
 The following steps are performed within the project:
 
-* A local cluster composed by a Control-Plane node and a single Worker-Node is bootstrapped
+* A local cluster composed by a Control-Plane node and one or more Worker-Nodes is bootstrapped
 * The Ports 80, 443, 9879 and 15021 are bound on the host, mapping NodePorts on the Control-Plane Node
 * A `kubeconfig` file is created locally in the project folder
-* The namespace `istio-system` with the basic Istio services is created
-* When choosing cilium, the services will be installed in the `kube-system` namespace
+* The namespace `ingress-nginx` with the NGINX Ingress controller is created, if it is enabled
+* The namespace `istio-system` with the basic Istio services is created, if Istio is enabled
+* When choosing Cilium, the services will be installed in the `kube-system` namespace
 
 In case of further operations/configuration of the Kind cluster, it's suggested to download the latest release of the `kind` tool from the [GitHub Repository](https://github.com/kubernetes-sigs/kind/releases/latest).
 
@@ -35,7 +36,7 @@ terraform apply
 There are variables that can be changed, they hold the following default values:
 
 ```hcl
-kubernetes_version=v1.29.1
+kubernetes_version=v1.30.0
 cluster_name=local-cluster
 enable_istio=false
 enable_cilium=false

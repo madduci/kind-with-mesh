@@ -18,9 +18,9 @@ help:
 	$(info Usage: make <target>)
 	$(info )		
 	$(info Available targets:)
-	$(info - create:  creates the cluster)
-	$(info - cilium:  configures Ciliu, in the cluster)
-	$(info - istio:   configures Istio in the cluster)
+	$(info - cluster:         creates the cluster with nginx ingress)
+	$(info - cluster-cilium:  creates the cluster with Cilium enabled)
+	$(info - cluster-istio:   creates the cluster with Istio enabled)
 	$(info - cleanup: deletes the cluster)
 
 .PHONY: cluster
@@ -43,6 +43,7 @@ cluster-cilium:
 init: 
 	cd cluster
 	terraform init -upgrade -reconfigure
+	terraform fmt -recursive
 	cd -
 
 .PHONY: cleanup
