@@ -61,6 +61,9 @@ jobs:
         file: cluster/tfplan.json 
         output_format: cli,sarif
         output_file_path: console,results.sarif
+        # Ignoring checks since the original helm charts is so configure
+        # Reference: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx
+        skip_check: CKV_K8S_25,CKV_K8S_22,CKV_K8S_35,CKV_K8S_26,CKV_K8S_11,CKV_K8S_15
 
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v3
