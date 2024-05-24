@@ -1,5 +1,7 @@
 # kind-with-mesh
 
+[![Terraform Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/plan.yaml)
+
 This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring optionally one between NGINX-Ingress (default), Istio or Cilium.
 
 The following steps are performed within the project:
