@@ -1,6 +1,6 @@
 # kind-with-mesh
 
-[![Terraform Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/plan.yaml)
+[![Terraform Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/terraform-plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/terraform-plan.yaml) [![OpenTofu Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/opentofu-plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/opentofu-plan.yaml)
 
 This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring optionally one between NGINX-Ingress (default), Istio or Cilium.
 
