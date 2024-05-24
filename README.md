@@ -6,7 +6,7 @@ This Terraform project allows an user create a local Kubernetes Cluster using th
 
 The following steps are performed within the project:
 
-* A local cluster composed by a Control-Plane node and one or more Worker-Nodes is bootstrapped
+* A local cluster composed by a Control-Plane node and one or more Worker-Nodes is bootstrapped (defaults to 3)
 * The Ports 80, 443, 9879 and 15021 are bound on the host, mapping NodePorts on the Control-Plane Node
 * A `kubeconfig` file is created locally in the project folder
 * The namespace `ingress-nginx` with the NGINX Ingress controller is created, if it is enabled
