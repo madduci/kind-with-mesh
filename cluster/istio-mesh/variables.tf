@@ -7,7 +7,7 @@ variable "namespace" {
 variable "helm_version" {
   description = "The version of the Istio Helm Chart to be installed"
   type        = string
-  default     = "1.22.0"
+  default     = "1.22.3"
 }
 
 variable "helm_repository" {
