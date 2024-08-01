@@ -45,3 +45,9 @@ variable "enable_cilium" {
   default     = false
   description = "Defines if Cilium should be installed"
 }
+
+variable "enable_argocd" {
+  type        = bool
+  default     = false
+  description = "Defines if ArgoCD should be installed"
+}

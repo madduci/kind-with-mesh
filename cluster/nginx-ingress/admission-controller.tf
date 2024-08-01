@@ -259,4 +259,9 @@ resource "kubernetes_validating_webhook_configuration_v1" "ingress_nginx_admissi
     }
     side_effects = "None"
   }
+
+  # Avoid update in-place to prevent webhook downtime and change of ca_bundle
+  lifecycle {
+    ignore_changes = [webhook]
+  }
 }

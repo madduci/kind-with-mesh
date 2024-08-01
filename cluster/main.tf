@@ -82,3 +82,10 @@ module "nginx_ingress" {
   count      = var.enable_istio == false && var.enable_cilium == false ? 1 : 0
   depends_on = [kind_cluster.local_cluster]
 }
+
+module "argocd" {
+  source = "./gitops-argocd"
+  # enable argocd only if Ingress-Nginx is installed and ArgoCD explicitly enabled
+  count      = var.enable_istio == false && var.enable_cilium == false && var.enable_argocd == true ? 1 : 0
+  depends_on = [module.nginx_ingress]
+}
