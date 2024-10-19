@@ -30,17 +30,17 @@ resource "helm_release" "istiod" {
   wait       = true
 
   set {
-    name  = "pilot.autoscaleEnabled"
+    name  = "defaults.pilot.autoscaleEnabled"
     value = "false"
   }
 
   set {
-    name  = "logAsJson"
+    name  = "defaults.global.logAsJson"
     value = "true"
   }
 
   set {
-    name  = "meshConfig.tracing.zipkin.address"
+    name  = "defaults.meshConfig.tracing.zipkin.address"
     value = "zipkin.${kubernetes_namespace_v1.istio_system.metadata[0].name}:9411"
   }
 
@@ -60,12 +60,12 @@ resource "helm_release" "istio_ingressgateway" {
   depends_on = [helm_release.istiod]
 
   set {
-    name  = "autoscaling.enabled"
+    name  = "defaults.autoscaling.enabled"
     value = "false"
   }
 
   set {
-    name  = "service.type"
+    name  = "defaults.service.type"
     value = "NodePort"
   }
 }
@@ -89,13 +89,13 @@ resource "helm_release" "istio_egressgateway" {
   ]
 
   set {
-    name  = "autoscaling.enabled"
+    name  = "defaults.autoscaling.enabled"
     value = "false"
   }
 
   # Egress gateways do not need an external LoadBalancer IP
   set {
-    name  = "service.type"
+    name  = "defaults.service.type"
     value = "ClusterIP"
   }
 }
