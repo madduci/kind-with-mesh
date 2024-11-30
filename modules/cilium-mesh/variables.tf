@@ -1,7 +1,7 @@
 variable "helm_version" {
   description = "The version of the Cilium Helm Chart to be installed"
   type        = string
-  default     = "1.16.3"
+  default     = "1.16.4"
 }
 
 variable "helm_repository" {

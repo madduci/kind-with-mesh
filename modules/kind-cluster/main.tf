@@ -1,4 +1,4 @@
-resource "kind_cluster" "local_cluster" {
+resource "kind_cluster" "cluster" {
   name            = var.cluster_name
   node_image      = "kindest/node:${var.kubernetes_version}"
   wait_for_ready  = true
@@ -62,23 +62,4 @@ resource "kind_cluster" "local_cluster" {
       YAML
     ]
   }
-}
-
-module "istio" {
-  source     = "./istio-mesh"
-  count      = var.enable_istio ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
-}
-
-module "cilium" {
-  source     = "./cilium-mesh"
-  count      = var.enable_cilium ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
-}
-
-module "nginx_ingress" {
-  source = "./nginx-ingress"
-  # enable ingress-nginx only if Cilium and Istio are not installed
-  count      = var.enable_istio == false && var.enable_cilium == false ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
 }
