@@ -2,9 +2,6 @@
 resource "kubernetes_namespace_v1" "workshop" {
   metadata {
     name = "workshop"
-    labels = {
-      istio-injection = "enabled"
-    }
   }
 
   depends_on = [module.cilium]
