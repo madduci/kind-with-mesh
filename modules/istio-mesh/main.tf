@@ -68,6 +68,11 @@ resource "helm_release" "istio_ingressgateway" {
     name  = "service.type"
     value = "NodePort"
   }
+
+  set {
+    name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].name"
+    value = set.value.name
+  }
 }
 
 resource "helm_release" "istio_egressgateway" {

@@ -14,10 +14,15 @@ resource "kubernetes_namespace_v1" "workshop" {
 resource "null_resource" "install_example" {
   depends_on = [kubernetes_namespace_v1.workshop]
 
+  // trigger again if the content changes
+  triggers = {
+    hash = filesha256("${path.root}/example.yaml")
+  }
   provisioner "local-exec" {
-    command = "kubectl apply --namespace ${kubernetes_namespace_v1.workshop.metadata[0].name} -f https://raw.githubusercontent.com/istio/istio/refs/heads/master/samples/helloworld/helloworld.yaml -f https://raw.githubusercontent.com/istio/istio/refs/heads/master/samples/helloworld/helloworld-gateway.yaml"
+    command = "kubectl apply --namespace ${kubernetes_namespace_v1.workshop.metadata[0].name} -f ${path.root}/example.yaml"
     environment = {
       "KUBECONFIG" = module.kind.kubeconfig_path
     }
+    
   }
 }

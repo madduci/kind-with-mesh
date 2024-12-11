@@ -27,3 +27,23 @@ output "name" {
   description = "The name of the created cluster"
   value       = kind_cluster.cluster.name
 }
+
+output "container_port_http" {
+  description = "The Container Port that is mapping the HTTP Port 80 on the host"
+  value = 30000
+}
+
+output "container_port_https" {
+  description = "The Container Port that is mapping the HTTPS Port 443 on the host"
+  value = 30001
+}
+
+output "container_port_istioctl" {
+  description = "The Container Port that is mapping the Istioctl Port 15021 on the host"
+  value = 30002
+}
+
+output "http_container_port" {
+  description = "The Container Port that is mapping the Ciliumctl Port 9876 on the host"
+  value = 30003
+}
