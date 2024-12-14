@@ -19,6 +19,16 @@ resource "helm_release" "cilium" {
   }
 
   set {
+    name  = "ingressController.service.insecureNodePort"
+    value = "${var.node_port_http}"
+  }
+
+  set {
+    name  = "ingressController.service.secureNodePort"
+    value = "${var.node_port_https}"
+  }
+
+  set {
     name  = "ingressController.enabled"
     value = "true"
   }
@@ -31,11 +41,6 @@ resource "helm_release" "cilium" {
   set {
     name  = "ingressController.loadbalancerMode"
     value = "shared"
-  }
-
-  set {
-    name  = "ingressController.default"
-    value = "true"
   }
 }
 
