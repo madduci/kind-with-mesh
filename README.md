@@ -23,77 +23,7 @@ The following tools are required for this project:
 * `terraform` (1.6+) / `opentofu` (1.6+)
 * `helm` (3.0+)
 * `kind` (0.22.0+)
-* `make`
 
 ## Creating the Cluster
 
-The bootstrapping and configuration of cluster can be performed with the command:
-
-```sh
-cd cluster
-terraform init
-terraform apply
-```
-
-There are variables that can be changed, they hold the following default values:
-
-```hcl
-kubernetes_version=v1.30.0
-cluster_name=local-cluster
-enable_istio=false
-enable_cilium=false
-```
-
-### Alternative: using Makefile
-
-To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
-
-```sh
-make cluster
-```
-
-If you want to delete the cluster, then type:
-
-```sh
-make cleanup
-```
-
-## Configuring Istio
-
-Istio deploys a Service Mesh, offering the possibility to configure Mutual-TLS between Pods in a cluster, by defining some configurations. It helps to create an Ingress Object, exposing then ports 80, 443 and 15021 outside (as NodePort).
-
-The configuration of the cluster with Istio can be performed with the command:
-
-```sh
-cd istio
-terraform init
-terraform apply -var=enable_istio=true
-```
-
-### Alternative: using Makefile
-
-To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
-
-```sh
-make cluster-istio
-```
-
-## Configuring Cilium
-
-Cilium deploys a Service Mesh, offering the possibility to configure Mutual-TLS between Pods in a cluster, by defining some configurations. It helps to create an Ingress Object, exposing then ports 80, 443 and 9879 outside (as NodePort).
-
-The configuration of Cilium can be performed with the command:
-
-```sh
-cd cilium
-terraform init
-terraform apply -var=enable_cilium=true
-```
-
-### Alternative: using Makefile
-
-To simplify the execution of the commands, a `Makefile` is available and this is used to perform the `terraform` commands seamless. All you need to do is to type from the root folder:
-
-```sh
-make cluster-cilium
-```
+Please see the `examples`, corresponding to the type of cluster that you want to bootstrap (with nginx, istio or cilium).
