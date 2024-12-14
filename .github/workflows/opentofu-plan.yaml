@@ -35,11 +35,8 @@ jobs:
     - name: Setup OpenTofu
       uses: opentofu/setup-opentofu@v1
 
-    - name: Terraform Init
-      run: cd cluster && tofu init
-
-    - name: Terraform Plan (Plain)
-      run: cd examples/kind-with-${matrix.type} && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
+    - name: Tofu Plan
+      run: cd examples/kind-with-${matrix.type} && tofu init && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
 
     - name: Output Plan
       run: cat tfplan.json
