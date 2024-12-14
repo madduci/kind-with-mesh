@@ -13,30 +13,20 @@ resource "helm_release" "cilium" {
     value = "kubernetes"
   }
 
-  #set {
-  #  name  = "nodePort.enabled"
-  #  value = "true"
-  #}
-
-  #set {
-  #  name  = "service.type"
-  #  value = "NodePort"
-  #}
-
   set {
     name  = "ingressController.service.type"
     value = "NodePort"
   }
 
-  #set {
-  #  name  = "ingressController.service.insecureNodePort"
-  #  value = var.insecure_node_port.nodePort
-  #}
+  set {
+    name  = "ingressController.service.insecureNodePort"
+    value = var.node_port_http
+  }
 
-  #set {
-  #  name  = "ingressController.service.secureNodePort"
-  #  value = var.secure_node_port.nodePort
-  #}
+  set {
+    name  = "ingressController.service.secureNodePort"
+    value = var.node_port_https
+  }
 
   set {
     name  = "ingressController.enabled"
@@ -51,11 +41,6 @@ resource "helm_release" "cilium" {
   set {
     name  = "ingressController.loadbalancerMode"
     value = "shared"
-  }
-
-  set {
-    name  = "ingressController.default"
-    value = "true"
   }
 }
 

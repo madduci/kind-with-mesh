@@ -1,4 +1,4 @@
-resource "kind_cluster" "local_cluster" {
+resource "kind_cluster" "cluster" {
   name            = var.cluster_name
   node_image      = "kindest/node:${var.kubernetes_version}"
   wait_for_ready  = true
@@ -22,28 +22,28 @@ resource "kind_cluster" "local_cluster" {
 
       # Expose Port 80
       extra_port_mappings {
-        container_port = 80
+        container_port = 30000
         host_port      = 80
         protocol       = "TCP"
       }
 
       # Expose Port 443
       extra_port_mappings {
-        container_port = 443
+        container_port = 30001
         host_port      = 443
         protocol       = "TCP"
       }
 
       # Expose Port 15021 (For istioctl)
       extra_port_mappings {
-        container_port = 15021
+        container_port = 30002
         host_port      = 15021
         protocol       = "TCP"
       }
 
       # Expose Port 9879 (For Cilium CLI)
       extra_port_mappings {
-        container_port = 9879
+        container_port = 30003
         host_port      = 9879
         protocol       = "TCP"
       }
@@ -62,23 +62,4 @@ resource "kind_cluster" "local_cluster" {
       YAML
     ]
   }
-}
-
-module "istio" {
-  source     = "./istio-mesh"
-  count      = var.enable_istio ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
-}
-
-module "cilium" {
-  source     = "./cilium-mesh"
-  count      = var.enable_cilium ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
-}
-
-module "nginx_ingress" {
-  source = "./nginx-ingress"
-  # enable ingress-nginx only if Cilium and Istio are not installed
-  count      = var.enable_istio == false && var.enable_cilium == false ? 1 : 0
-  depends_on = [kind_cluster.local_cluster]
 }

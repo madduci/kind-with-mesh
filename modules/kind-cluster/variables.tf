@@ -1,7 +1,11 @@
 variable "kubernetes_version" {
   type        = string
-  default     = "v1.31.1"
+  default     = "v1.31.4"
   description = "Defines the kubernetes version to be used"
+  validation {
+    condition     = can(regex("v[0-9]+.[0-9]+.[0-9]+", var.kubernetes_version))
+    error_message = "The Kubernetes version must be in the format v1.x.y"
+  }
 }
 
 variable "cluster_name" {
@@ -32,16 +36,4 @@ variable "kubeconfig_save_path" {
     condition     = length(var.kubeconfig_save_path) > 0
     error_message = "The kubeconfig save path must not be empty"
   }
-}
-
-variable "enable_istio" {
-  type        = bool
-  default     = false
-  description = "Defines if Istio should be installed"
-}
-
-variable "enable_cilium" {
-  type        = bool
-  default     = false
-  description = "Defines if Cilium should be installed"
 }

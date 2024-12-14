@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        type: [plain, istio, cilium]
+        type: [nginx, istio, cilium]
 
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -35,30 +35,18 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: Terraform Init
-      run: cd cluster && terraform init
-
-    - name: Terraform Plan (Plain)
-      if: matrix.type == 'plain'
-      run: cd cluster && terraform plan -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
-
-    - name: Terraform Plan (With Istio)
-      if: matrix.type == 'istio'
-      run: cd cluster && terraform plan -var="enable_istio=true" -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
-
-    - name: Terraform Plan (With Cilium)
-      if: matrix.type == 'cilium'
-      run: cd cluster && terraform plan -var="enable_cilium=true" -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
+    - name: Terraform Plan
+      run: cd examples/kind-with-${{matrix.type}} && terraform init && terraform plan -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
 
     - name: Output Plan
-      run: cat cluster/tfplan.json
+      run: cat examples/kind-with-${{matrix.type}}/tfplan.json
 
     - name: Checkov Analysis
       id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
-        directory: cluster/
-        file: cluster/tfplan.json 
+        directory: examples/kind-with-${{matrix.type}}/
+        file: examples/kind-with-${{matrix.type}}/tfplan.json 
         output_format: cli,sarif
         output_file_path: console,results.sarif
         # Ignoring checks since the original helm charts is so configure
