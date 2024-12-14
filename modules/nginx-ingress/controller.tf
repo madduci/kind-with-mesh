@@ -198,20 +198,16 @@ resource "kubernetes_service_v1" "ingress_nginx_controller" {
 
     ip_family_policy = "SingleStack"
 
-    port {
-      app_protocol = "http"
-      name         = "http"
-      port         = 80
-      protocol     = "TCP"
-      target_port  = "http"
-    }
-
-    port {
-      app_protocol = "https"
-      name         = "https"
-      port         = 443
-      protocol     = "TCP"
-      target_port  = "https"
+    dynamic "port" {
+      for_each = var.local_node_ports
+      content {
+        app_protocol = port.value.app_protocol
+        name         = port.value.name
+        port         = port.value.port
+        protocol     = port.value.protocol
+        target_port  = port.value.target_port
+        node_port    = port.value.node_port
+      }
     }
 
     selector = {
@@ -289,7 +285,7 @@ resource "kubernetes_deployment_v1" "ingress_nginx_controller" {
             name  = "LD_PRELOAD"
             value = "/usr/local/lib/libmimalloc.so"
           }
-          image             = "registry.k8s.io/ingress-nginx/controller:v1.10.1@sha256:e24f39d3eed6bcc239a56f20098878845f62baa34b9f2be2fd2c38ce9fb0f29e"
+          image             = "registry.k8s.io/ingress-nginx/controller:v${var.ingress_nginx_version}@sha256:${var.ingress_nginx_sha256_digest}"
           image_pull_policy = "IfNotPresent"
           lifecycle {
             pre_stop {

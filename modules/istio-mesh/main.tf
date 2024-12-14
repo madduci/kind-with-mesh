@@ -40,8 +40,37 @@ resource "helm_release" "istiod" {
   }
 
   set {
-    name  = "meshConfig.tracing.zipkin.address"
-    value = "zipkin.${kubernetes_namespace_v1.istio_system.metadata[0].name}:9411"
+    name  = "autoscaleEnabled"
+    value = "false"
+  }
+
+  set {
+    name  = "autoscaleMin"
+    value = var.replica_count
+  }
+
+  set {
+    name  = "replicaCount"
+    value = var.replica_count
+  }
+
+  set {
+    name  = "traceSampling"
+    value = var.trace_sampling
+  }
+
+  set {
+    name  = "global.proxy.tracer"
+    value = var.tracer_type
+  }
+
+  dynamic "set" {
+    for_each = var.tracer_type != "none" ? ([var.tracer_type]) : []
+    content {
+      name  = "meshConfig.tracing.${var.tracer_type}.address"
+      value = var.tracer_address
+    }
+
   }
 
   depends_on = [helm_release.istio_base]
@@ -69,9 +98,44 @@ resource "helm_release" "istio_ingressgateway" {
     value = "NodePort"
   }
 
-  set {
-    name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].name"
-    value = set.value.name
+  dynamic "set" {
+    for_each = toset(var.local_node_ports_istio)
+    content {
+      name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].name"
+      value = set.value.name
+    }
+  }
+
+  dynamic "set" {
+    for_each = toset(var.local_node_ports_istio)
+    content {
+      name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].protocol"
+      value = set.value.protocol
+    }
+  }
+
+  dynamic "set" {
+    for_each = toset(var.local_node_ports_istio)
+    content {
+      name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].port"
+      value = set.value.port
+    }
+  }
+
+  dynamic "set" {
+    for_each = toset(var.local_node_ports_istio)
+    content {
+      name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].targetPort"
+      value = set.value.targetPort
+    }
+  }
+
+  dynamic "set" {
+    for_each = toset(var.local_node_ports_istio)
+    content {
+      name  = "service.ports[${index(var.local_node_ports_istio, set.value)}].nodePort"
+      value = set.value.nodePort
+    }
   }
 }
 

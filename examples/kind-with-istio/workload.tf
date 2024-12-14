@@ -23,6 +23,6 @@ resource "null_resource" "install_example" {
     environment = {
       "KUBECONFIG" = module.kind.kubeconfig_path
     }
-    
+
   }
 }

@@ -1,7 +1,11 @@
 variable "kubernetes_version" {
   type        = string
-  default     = "v1.31.2"
+  default     = "v1.31.4"
   description = "Defines the kubernetes version to be used"
+  validation {
+    condition     = can(regex("v[0-9]+.[0-9]+.[0-9]+", var.kubernetes_version))
+    error_message = "The Kubernetes version must be in the format v1.x.y"
+  }
 }
 
 variable "cluster_name" {

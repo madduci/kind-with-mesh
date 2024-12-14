@@ -4,7 +4,7 @@ resource "kubernetes_namespace_v1" "workshop" {
     name = "workshop"
   }
 
-  depends_on = [ module.nginx_ingress ]
+  depends_on = [module.nginx_ingress]
 }
 
 # Deploys the Helm Chart
