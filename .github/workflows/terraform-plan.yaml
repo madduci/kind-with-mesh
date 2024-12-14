@@ -39,7 +39,7 @@ jobs:
       run: cd examples/kind-with-${{matrix.type}} && terraform init && terraform plan -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
 
     - name: Output Plan
-      run: cat tfplan.json
+      run: cat examples/kind-with-${{matrix.type}}/tfplan.json
 
     - name: Checkov Analysis
       id: checkov
