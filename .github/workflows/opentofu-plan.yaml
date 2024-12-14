@@ -36,7 +36,7 @@ jobs:
       uses: opentofu/setup-opentofu@v1
 
     - name: Tofu Plan
-      run: cd examples/kind-with-${matrix.type} && tofu init && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
+      run: cd examples/kind-with-${{matrix.type}} && tofu init && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
 
     - name: Output Plan
       run: cat tfplan.json
@@ -45,8 +45,8 @@ jobs:
       id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
-        directory: examples/kind-with-${matrix.type}/
-        file: examples/kind-with-${matrix.type}/tfplan.json 
+        directory: examples/kind-with-${{matrix.type}}/
+        file: examples/kind-with-${{matrix.type}}/tfplan.json 
         output_format: cli,sarif
         output_file_path: console,results.sarif
         # Ignoring checks since the original helm charts is so configure
