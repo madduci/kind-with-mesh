@@ -13,7 +13,7 @@ resource "helm_release" "nextcloud" {
   name       = "nextcloud"
   chart      = "nextcloud"
   repository = "https://nextcloud.github.io/helm/"
-  version    = "6.2.4"
+  version    = "6.6.2"
   namespace  = kubernetes_namespace_v1.workshop.metadata[0].name
   lint       = true
   atomic     = true

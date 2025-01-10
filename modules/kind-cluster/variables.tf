@@ -20,7 +20,7 @@ variable "cluster_name" {
 
 variable "worker_nodes" {
   type        = number
-  default     = 3
+  default     = 1
   description = "Defines the number of worker nodes to be created"
   validation {
     condition     = var.worker_nodes > 0
