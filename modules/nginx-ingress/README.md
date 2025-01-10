@@ -58,7 +58,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ingress_nginx_sha256_digest"></a> [ingress\_nginx\_sha256\_digest](#input\_ingress\_nginx\_sha256\_digest) | The sha256 digest of the NGINX Ingress to be installed | `string` | `"d56f135b6462cfc476447cfe564b83a45e8bb7da2774963b00d12161112270b7"` | no |
 | <a name="input_ingress_nginx_version"></a> [ingress\_nginx\_version](#input\_ingress\_nginx\_version) | The version of the NGINX Ingress to be installed | `string` | `"1.11.3"` | no |
+| <a name="input_ingress_webhook_certgen_sha256_digest"></a> [ingress\_webhook\_certgen\_sha256\_digest](#input\_ingress\_webhook\_certgen\_sha256\_digest) | The sha256 digest of the NGINX Webhook Certificate generator to be installed | `string` | `"a9f03b34a3cbfbb26d103a14046ab2c5130a80c3d69d526ff8063d2b37b9fd3f"` | no |
+| <a name="input_ingress_webhook_certgen_version"></a> [ingress\_webhook\_certgen\_version](#input\_ingress\_webhook\_certgen\_version) | The version of the NGINX Webhook Certificate generator to be installed | `string` | `"1.4.4"` | no |
+| <a name="input_local_node_ports"></a> [local\_node\_ports](#input\_local\_node\_ports) | Defines the node ports to use with the local cluster (kind) | <pre>list(object({<br/>    app_protocol = string<br/>    name         = string<br/>    target_port  = string<br/>    protocol     = string<br/>    port         = number<br/>    node_port    = number<br/>  }))</pre> | <pre>[<br/>  {<br/>    "app_protocol": "http",<br/>    "name": "http",<br/>    "node_port": 30000,<br/>    "port": 80,<br/>    "protocol": "TCP",<br/>    "target_port": "http"<br/>  },<br/>  {<br/>    "app_protocol": "https",<br/>    "name": "https",<br/>    "node_port": 30001,<br/>    "port": 443,<br/>    "protocol": "TCP",<br/>    "target_port": "https"<br/>  }<br/>]</pre> | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where to install the services | `string` | `"ingress-nginx"` | no |
 
 ## Outputs

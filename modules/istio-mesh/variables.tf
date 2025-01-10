@@ -11,7 +11,7 @@ variable "namespace" {
 variable "helm_version" {
   description = "The version of the Istio Helm Chart to be installed"
   type        = string
-  default     = "1.24.1"
+  default     = "1.24.2"
   validation {
     condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
     error_message = "The Helm version must be in the format x.y.z"
