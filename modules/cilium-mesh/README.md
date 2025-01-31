@@ -42,7 +42,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm Chart Repository URL | `string` | `"https://helm.cilium.io/"` | no |
-| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Cilium Helm Chart to be installed | `string` | `"1.16.5"` | no |
+| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Cilium Helm Chart to be installed | `string` | `"1.16.6"` | no |
 | <a name="input_node_port_http"></a> [node\_port\_http](#input\_node\_port\_http) | The NodePort for HTTP traffic | `number` | `30000` | no |
 | <a name="input_node_port_https"></a> [node\_port\_https](#input\_node\_port\_https) | The NodePort for HTTPS traffic | `number` | `30001` | no |
 

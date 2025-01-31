@@ -1,37 +1,52 @@
-locals {
-  controller_labels = {
-    "app.kubernetes.io/component" = "controller"
-    "app.kubernetes.io/instance"  = "ingress-nginx"
-    "app.kubernetes.io/name"      = "ingress-nginx"
-    "app.kubernetes.io/part-of"   = "ingress-nginx"
-    "app.kubernetes.io/version"   = "${var.ingress_nginx_version}"
-  }
-
-  admission_labels = {
-    "app.kubernetes.io/component" = "admission-webhook"
-    "app.kubernetes.io/instance"  = "ingress-nginx"
-    "app.kubernetes.io/name"      = "ingress-nginx"
-    "app.kubernetes.io/part-of"   = "ingress-nginx"
-    "app.kubernetes.io/version"   = "${var.ingress_nginx_version}"
-  }
-}
-
 resource "kubernetes_namespace_v1" "ingress_nginx" {
   metadata {
     name = var.namespace
     labels = {
-      "app.kubernetes.io/instance" = "ingress-nginx"
-      "app.kubernetes.io/name"     = "ingress-nginx"
+      "kubernetes.io/metadata.name" : "ingress-nginx"
+      "name" : "ingress-nginx"
+      "pod-security.kubernetes.io/warn" : "restricted"
+      "pod-security.kubernetes.io/warn-version" : "v1.32"
     }
   }
 }
 
-resource "kubernetes_ingress_class_v1" "ingressclass_nginx" {
-  metadata {
-    labels = local.controller_labels
-    name   = "nginx"
-  }
-  spec {
-    controller = "k8s.io/ingress-nginx"
-  }
+locals {
+  target_namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
+}
+
+resource "helm_release" "ingress_nginx" {
+  name       = "ingress-nginx"
+  chart      = "ingress-nginx"
+  repository = var.helm_repository
+  version    = var.helm_version
+  namespace  = local.target_namespace
+  lint       = true
+  atomic     = true
+  wait       = true
+
+  timeout = 120
+
+  values = [<<EOF
+  controller:
+    service:
+      type: NodePort
+      nodePorts:
+        http: ${var.local_node_ports[0].node_port}
+        https: ${var.local_node_ports[1].node_port}
+    nodeSelector:
+      ${var.toleration_label}: 
+    hostPort:
+      enabled: true
+    tolerations:
+      - key: ${var.toleration_label}
+        operator: Exists
+        effect: NoSchedule
+    admissionWebhooks:
+      patch:
+        tolerations:
+          - key: ${var.toleration_label}
+            operator: Exists
+            effect: NoSchedule
+  EOF
+  ]
 }

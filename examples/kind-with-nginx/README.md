@@ -47,3 +47,42 @@ $TF_BIN destroy
 ```
 
 and all the resources will be deleted.
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 2.17.0 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.7.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.35.1 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.17.0 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.35.1 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_kind"></a> [kind](#module\_kind) | ../../modules/kind-cluster | n/a |
+| <a name="module_nginx_ingress"></a> [nginx\_ingress](#module\_nginx\_ingress) | ../../modules/nginx-ingress | n/a |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [helm_release.nextcloud](https://registry.terraform.io/providers/hashicorp/helm/2.17.0/docs/resources/release) | resource |
+| [kubernetes_ingress_v1.nextcloud](https://registry.terraform.io/providers/hashicorp/kubernetes/2.35.1/docs/resources/ingress_v1) | resource |
+| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/2.35.1/docs/resources/namespace_v1) | resource |
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->

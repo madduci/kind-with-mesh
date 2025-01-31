@@ -1,7 +1,7 @@
 variable "helm_version" {
   description = "The version of the Cilium Helm Chart to be installed"
   type        = string
-  default     = "1.16.5"
+  default     = "1.16.6"
   validation {
     condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
     error_message = "The Helm version must be in the format x.y.z"
@@ -13,8 +13,8 @@ variable "helm_repository" {
   description = "Helm Chart Repository URL"
   default     = "https://helm.cilium.io/"
   validation {
-    condition     = can(regex("https://.*", var.helm_repository))
-    error_message = "The Helm Repository URL must start with https://"
+    condition     = can(regex("https://.*", var.helm_repository)) || can(regex("oci://.*", var.helm_repository))
+    error_message = "The Helm Repository URL must start with https:// or oci://"
   }
 }
 

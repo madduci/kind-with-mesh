@@ -23,8 +23,8 @@ variable "helm_repository" {
   description = "Helm Chart Repository URL"
   default     = "https://istio-release.storage.googleapis.com/charts"
   validation {
-    condition     = can(regex("https://.*", var.helm_repository))
-    error_message = "The Helm Repository URL must start with https://"
+    condition     = can(regex("https://.*", var.helm_repository)) || can(regex("oci://.*", var.helm_repository))
+    error_message = "The Helm Repository URL must start with https:// or oci://"
   }
 }
 
