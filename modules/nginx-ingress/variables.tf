@@ -1,46 +1,36 @@
+variable "helm_version" {
+  description = "The version of the nginx Ingress Controller Helm Chart to be installed"
+  type        = string
+  default     = "4.12.0"
+  validation {
+    condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
+    error_message = "The Helm version must be in the format x.y.z"
+  }
+}
+
+variable "helm_repository" {
+  type        = string
+  description = "Helm Chart Repository URL"
+  default     = "https://kubernetes.github.io/ingress-nginx"
+  validation {
+    condition     = can(regex("https://.*", var.helm_repository)) || can(regex("oci://.*", var.helm_repository))
+    error_message = "The Helm Repository URL must start with https:// or oci://"
+  }
+}
+
 variable "namespace" {
   description = "Namespace where to install the services"
   type        = string
   default     = "ingress-nginx"
 }
 
-variable "ingress_nginx_version" {
-  description = "The version of the NGINX Ingress to be installed"
+variable "toleration_label" {
   type        = string
-  default     = "1.11.3"
+  default     = "node-role.kubernetes.io/control-plane"
+  description = "Defines label to be used for toleration when deploying the Ingress Controller"
   validation {
-    condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.ingress_nginx_version))
-    error_message = "The NGINX Ingress version must be in the format x.y.z"
-  }
-}
-
-variable "ingress_nginx_sha256_digest" {
-  description = "The sha256 digest of the NGINX Ingress to be installed"
-  type        = string
-  default     = "d56f135b6462cfc476447cfe564b83a45e8bb7da2774963b00d12161112270b7"
-  validation {
-    condition     = can(regex("^[a-f0-9]{64}$", var.ingress_nginx_sha256_digest))
-    error_message = "The sha256 digest must be a valid sha256 hash"
-  }
-}
-
-variable "ingress_webhook_certgen_version" {
-  description = "The version of the NGINX Webhook Certificate generator to be installed"
-  type        = string
-  default     = "1.4.4"
-  validation {
-    condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.ingress_webhook_certgen_version))
-    error_message = "The NGINX Webhook Certificate generator version must be in the format x.y.z"
-  }
-}
-
-variable "ingress_webhook_certgen_sha256_digest" {
-  description = "The sha256 digest of the NGINX Webhook Certificate generator to be installed"
-  type        = string
-  default     = "a9f03b34a3cbfbb26d103a14046ab2c5130a80c3d69d526ff8063d2b37b9fd3f"
-  validation {
-    condition     = can(regex("^[a-f0-9]{64}$", var.ingress_webhook_certgen_sha256_digest))
-    error_message = "The sha256 digest must be a valid sha256 hash"
+    condition     = length(var.toleration_label) > 0
+    error_message = "The toleration label must not be empty"
   }
 }
 

@@ -10,7 +10,7 @@ Clone this repository and set the path to this module in your Project.
 module "kind" {
     source = "path/to/this/module"
     
-    kubernetes_version = "1.31.4"
+    kubernetes_version = "1.32.1"
     cluster_name = "my_local_cluster"
     worker_nodes = 2 # Create two worker nodes
     kubeconfig_save_path = "./kubeconfig"
@@ -44,7 +44,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Defines the name of the cluster | `string` | `"local-cluster"` | no |
 | <a name="input_kubeconfig_save_path"></a> [kubeconfig\_save\_path](#input\_kubeconfig\_save\_path) | Defines the path to save the kubeconfig file | `string` | `"kubeconfig"` | no |
-| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Defines the kubernetes version to be used | `string` | `"v1.31.4"` | no |
+| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Defines the kubernetes version to be used | `string` | `"v1.32.1"` | no |
 | <a name="input_worker_nodes"></a> [worker\_nodes](#input\_worker\_nodes) | Defines the number of worker nodes to be created | `number` | `1` | no |
 
 ## Outputs
