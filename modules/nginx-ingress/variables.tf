@@ -1,7 +1,7 @@
 variable "helm_version" {
   description = "The version of the nginx Ingress Controller Helm Chart to be installed"
   type        = string
-  default     = "4.12.0"
+  default     = "4.12.1"
   validation {
     condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
     error_message = "The Helm version must be in the format x.y.z"

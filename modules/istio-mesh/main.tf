@@ -13,7 +13,7 @@ resource "helm_release" "istio_base" {
   chart      = "base"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = kubernetes_namespace_v1.istio_system.metadata[0].name
+  namespace  = local.target_namespace
   lint       = true
   atomic     = true
   wait       = true
@@ -24,7 +24,7 @@ resource "helm_release" "istiod" {
   chart      = "istiod"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = kubernetes_namespace_v1.istio_system.metadata[0].name
+  namespace  = local.target_namespace
   lint       = true
   atomic     = true
   wait       = true
@@ -81,7 +81,7 @@ resource "helm_release" "istio_ingressgateway" {
   chart      = "gateway"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = kubernetes_namespace_v1.istio_system.metadata[0].name
+  namespace  = local.target_namespace
   lint       = true
   atomic     = true
   wait       = true
@@ -144,7 +144,7 @@ resource "helm_release" "istio_egressgateway" {
   chart      = "gateway"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = kubernetes_namespace_v1.istio_system.metadata[0].name
+  namespace  = local.target_namespace
   lint       = true
   atomic     = true
   wait       = true
@@ -174,7 +174,7 @@ resource "helm_release" "istio_cni" {
   chart      = "cni"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = kubernetes_namespace_v1.istio_system.metadata[0].name
+  namespace  = local.target_namespace
   lint       = true
   atomic     = true
   wait       = true
@@ -185,7 +185,7 @@ resource "helm_release" "istio_cni" {
 data "kubernetes_service_v1" "istio_ingress" {
   metadata {
     name      = "istio-ingressgateway"
-    namespace = kubernetes_namespace_v1.istio_system.metadata[0].name
+    namespace = local.target_namespace
   }
 
   depends_on = [helm_release.istio_ingressgateway]
