@@ -41,3 +41,32 @@ $TF_BIN destroy
 ```
 
 and all the resources will be deleted.
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.0.2 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.9.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.38.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_cilium"></a> [cilium](#module\_cilium) | ../../modules/cilium-mesh | n/a |
+| <a name="module_kind"></a> [kind](#module\_kind) | ../../modules/kind-cluster | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->

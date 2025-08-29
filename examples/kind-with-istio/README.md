@@ -53,3 +53,36 @@ $TF_BIN destroy
 ```
 
 and all the resources will be deleted.
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.0.2 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.9.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.38.0 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | 3.2.3 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_istio"></a> [istio](#module\_istio) | ../../modules/istio-mesh | n/a |
+| <a name="module_kind"></a> [kind](#module\_kind) | ../../modules/kind-cluster | n/a |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/2.38.0/docs/resources/namespace_v1) | resource |
+| [null_resource.install_example](https://registry.terraform.io/providers/hashicorp/null/3.2.3/docs/resources/resource) | resource |
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->

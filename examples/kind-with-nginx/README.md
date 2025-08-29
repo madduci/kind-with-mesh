@@ -52,16 +52,10 @@ and all the resources will be deleted.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 2.17.0 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.7.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.35.1 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.17.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.35.1 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.0.2 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.9.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.38.0 |
 
 ## Modules
 
@@ -74,9 +68,9 @@ and all the resources will be deleted.
 
 | Name | Type |
 |------|------|
-| [helm_release.nextcloud](https://registry.terraform.io/providers/hashicorp/helm/2.17.0/docs/resources/release) | resource |
-| [kubernetes_ingress_v1.nextcloud](https://registry.terraform.io/providers/hashicorp/kubernetes/2.35.1/docs/resources/ingress_v1) | resource |
-| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/2.35.1/docs/resources/namespace_v1) | resource |
+| [helm_release.nextcloud](https://registry.terraform.io/providers/hashicorp/helm/3.0.2/docs/resources/release) | resource |
+| [kubernetes_ingress_v1.nextcloud](https://registry.terraform.io/providers/hashicorp/kubernetes/2.38.0/docs/resources/ingress_v1) | resource |
+| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/2.38.0/docs/resources/namespace_v1) | resource |
 
 ## Inputs
 

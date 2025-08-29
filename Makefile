@@ -86,7 +86,7 @@ lint: ## Performs linting
 .PHONY: docs
 docs: ## Generates documentation for all terraform modules
 	@echo "## Generating documentation for all terraform modules"
-	@for dir in $(shell find $(ROOT_DIR)/modules -name '*.tf' -exec dirname {} \; | sort -u); do \
+	@for dir in $(shell find $(ROOT_DIR) -name '*.tf' -exec dirname {} \; | sort -u); do \
 		terraform-docs -c "$(ROOT_DIR)/.tfdocs.yaml" "$$dir"; \
 	done
 
