@@ -1,9 +1,4 @@
-output "cilium_http_port" {
-  description = "The Cilium HTTP port"
-  value       = "80"
-}
-
-output "cilium_https_port" {
-  description = "The Cilium HTTPS port"
-  value       = "443"
+output "ingress_port_info" {
+  description = "The Cilium Ingress Information"
+  value       = { for entry in data.kubernetes_service_v1.cilium_ingress.spec[0].port : entry.name => entry.port }
 }

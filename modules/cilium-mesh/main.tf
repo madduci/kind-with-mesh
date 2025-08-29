@@ -18,11 +18,11 @@ resource "helm_release" "cilium" {
     },
     {
       name  = "ingressController.service.insecureNodePort"
-      value = var.node_port_http
+      value = var.port_configuration["http"].node_port
     },
     {
       name  = "ingressController.service.secureNodePort"
-      value = var.node_port_https
+      value = var.port_configuration["https"].node_port
       }, {
       name  = "ingressController.enabled"
       value = "true"

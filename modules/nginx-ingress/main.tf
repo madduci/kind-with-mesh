@@ -5,7 +5,7 @@ resource "kubernetes_namespace_v1" "ingress_nginx" {
       "kubernetes.io/metadata.name" : "ingress-nginx"
       "name" : "ingress-nginx"
       "pod-security.kubernetes.io/warn" : "restricted"
-      "pod-security.kubernetes.io/warn-version" : "v1.32"
+      "pod-security.kubernetes.io/warn-version" : "v1.34"
     }
   }
 }
@@ -31,8 +31,8 @@ resource "helm_release" "ingress_nginx" {
     service:
       type: NodePort
       nodePorts:
-        http: ${var.local_node_ports[0].node_port}
-        https: ${var.local_node_ports[1].node_port}
+        http: ${var.port_configuration["http"].node_port}
+        https: ${var.port_configuration["https"].node_port}
     nodeSelector:
       ${var.toleration_label}: 
     hostPort:
@@ -49,4 +49,13 @@ resource "helm_release" "ingress_nginx" {
             effect: NoSchedule
   EOF
   ]
+}
+
+data "kubernetes_service_v1" "nginx_ingress" {
+  metadata {
+    name      = "ingress-nginx-controller"
+    namespace = local.target_namespace
+  }
+
+  depends_on = [helm_release.ingress_nginx]
 }

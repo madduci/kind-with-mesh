@@ -20,32 +20,13 @@ resource "kind_cluster" "cluster" {
         YAML 
       ]
 
-      # Expose Port 80
-      extra_port_mappings {
-        container_port = 30000
-        host_port      = 80
-        protocol       = "TCP"
-      }
-
-      # Expose Port 443
-      extra_port_mappings {
-        container_port = 30001
-        host_port      = 443
-        protocol       = "TCP"
-      }
-
-      # Expose Port 15021 (For istioctl)
-      extra_port_mappings {
-        container_port = 30002
-        host_port      = 15021
-        protocol       = "TCP"
-      }
-
-      # Expose Port 9879 (For Cilium CLI)
-      extra_port_mappings {
-        container_port = 30003
-        host_port      = 9879
-        protocol       = "TCP"
+      dynamic "extra_port_mappings" {
+        for_each = var.port_configuration
+        content {
+          container_port = extra_port_mappings.value.node_port
+          host_port      = extra_port_mappings.value.host_port
+          protocol       = extra_port_mappings.value.protocol
+        }
       }
     }
 

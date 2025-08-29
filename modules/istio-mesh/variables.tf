@@ -28,36 +28,39 @@ variable "helm_repository" {
   }
 }
 
-variable "local_node_ports_istio" {
-  description = "Defines the node ports to use with the local cluster (kind)"
-  type = list(object({
-    port       = number
-    targetPort = number
-    name       = string
-    protocol   = string
-    nodePort   = string
+variable "port_configuration" {
+  type = map(object({
+    app_protocol = string
+    node_port    = number
+    host_port    = number
+    target_port  = number
+    protocol     = string
   }))
-  default = [{
-    name       = "status-port"
-    protocol   = "TCP"
-    port       = 15021
-    targetPort = 15021
-    nodePort   = 30002
+  description = "Defines the configuration of the ports to be used by the Istio Ingress Gateway"
+
+  default = {
+    http = {
+      app_protocol = "http"
+      node_port    = 30000
+      host_port    = 80
+      target_port  = 80
+      protocol     = "TCP"
+    }
+    https = {
+      app_protocol = "https"
+      node_port    = 30001
+      host_port    = 443
+      target_port  = 443
+      protocol     = "TCP"
     },
-    {
-      name       = "http2"
-      protocol   = "TCP"
-      port       = 80
-      targetPort = 80
-      nodePort   = 30000
-    },
-    {
-      name       = "https"
-      protocol   = "TCP"
-      port       = 443
-      targetPort = 443
-      nodePort   = 30001
-  }]
+    status-port = {
+      app_protocol = "http"
+      node_port    = 30002
+      host_port    = 15021
+      target_port  = 15021
+      protocol     = "TCP"
+    }
+  }
 }
 
 variable "replica_count" {
@@ -78,21 +81,6 @@ variable "trace_sampling" {
     condition     = tonumber(var.trace_sampling) > 0 && tonumber(var.trace_sampling) <= 100
     error_message = "Error: Invalid tracing sampling value. It must be between 1.0 and 100.0"
   }
-}
-
-variable "ingress_annotations" {
-  description = "The annotations to be used for the ingress gateway"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
-}
-
-variable "external_ip" {
-  description = "The external IP of the ingress gateway, only single IP is supported"
-  type        = string
-  default     = ""
 }
 
 variable "tracer_type" {

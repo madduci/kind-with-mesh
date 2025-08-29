@@ -6,6 +6,33 @@ resource "kubernetes_namespace_v1" "istio_system" {
 
 locals {
   target_namespace = kubernetes_namespace_v1.istio_system.metadata[0].name
+
+  port_keys = keys(var.port_configuration)
+  helm_ingress_port_values = flatten([
+    for key, config in var.port_configuration : [
+      {
+        name = "service.ports[${index(local.port_keys, key)}].name"
+        # For istio, the "http" port must be named "http2"
+        value = key == "http" ? "http2" : key
+      },
+      {
+        name  = "service.ports[${index(local.port_keys, key)}].protocol"
+        value = config.protocol
+      },
+      {
+        name  = "service.ports[${index(local.port_keys, key)}].port"
+        value = config.host_port
+      },
+      {
+        name  = "service.ports[${index(local.port_keys, key)}].targetPort"
+        value = config.target_port
+      },
+      {
+        name  = "service.ports[${index(local.port_keys, key)}].nodePort"
+        value = config.node_port
+      }
+    ]
+  ])
 }
 
 resource "helm_release" "istio_base" {
@@ -87,35 +114,7 @@ resource "helm_release" "istio_ingressgateway" {
       name  = "replicaCount"
       value = var.replica_count
     }
-    ], [
-    for port in toset(var.local_node_ports_istio) : {
-      name  = "service.ports[${index(var.local_node_ports_istio, port)}].name"
-      value = port.name
-    }],
-    [
-      for port in toset(var.local_node_ports_istio) : {
-        name  = "service.ports[${index(var.local_node_ports_istio, port)}].protocol"
-        value = port.protocol
-    }],
-    [
-      for port in toset(var.local_node_ports_istio) : {
-        name  = "service.ports[${index(var.local_node_ports_istio, port)}].port"
-        value = port.port
-    }],
-    [
-      for port in toset(var.local_node_ports_istio) :
-      {
-        name  = "service.ports[${index(var.local_node_ports_istio, port)}].targetPort"
-        value = port.targetPort
-    }],
-    [
-      for port in toset(var.local_node_ports_istio) :
-      {
-        name  = "service.ports[${index(var.local_node_ports_istio, port)}].nodePort"
-        value = port.nodePort
-      }
-  ])
-
+  ], local.helm_ingress_port_values)
 }
 
 resource "helm_release" "istio_egressgateway" {

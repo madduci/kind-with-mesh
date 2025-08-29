@@ -1,7 +1,7 @@
 variable "helm_version" {
   description = "The version of the Cilium Helm Chart to be installed"
   type        = string
-  default     = "1.16.6"
+  default     = "1.18.1"
   validation {
     condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
     error_message = "The Helm version must be in the format x.y.z"
@@ -18,22 +18,37 @@ variable "helm_repository" {
   }
 }
 
-variable "node_port_http" {
-  description = "The NodePort for HTTP traffic"
-  type        = number
-  default     = 30000
-  validation {
-    condition     = can(regex("^[0-9]+$", var.node_port_http))
-    error_message = "The NodePort must be a number"
-  }
-}
+variable "port_configuration" {
+  type = map(object({
+    app_protocol = string
+    node_port    = number
+    host_port    = number
+    target_port  = number
+    protocol     = string
+  }))
+  description = "Defines the port mappings for the cluster nodes"
 
-variable "node_port_https" {
-  description = "The NodePort for HTTPS traffic"
-  type        = number
-  default     = 30001
-  validation {
-    condition     = can(regex("^[0-9]+$", var.node_port_https))
-    error_message = "The NodePort must be a number"
+  default = {
+    http = {
+      app_protocol = "http"
+      node_port    = 30000
+      host_port    = 80
+      target_port  = 80
+      protocol     = "TCP"
+    }
+    https = {
+      app_protocol = "https"
+      node_port    = 30001
+      host_port    = 443
+      target_port  = 443
+      protocol     = "TCP"
+    }
+    cilium-port = {
+      app_protocol = "http"
+      node_port    = 30003
+      host_port    = 9876
+      target_port  = 9876
+      protocol     = "TCP"
+    }
   }
 }

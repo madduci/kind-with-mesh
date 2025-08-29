@@ -1,9 +1,4 @@
-output "istio_http_port" {
-  description = "The Istio HTTP port"
-  value       = "80"
-}
-
-output "istio_https_port" {
-  description = "The Istio HTTPS port"
-  value       = "443"
+output "ingress_port_info" {
+  description = "Information about the Istio Ingress Ports"
+  value       = { for entry in data.kubernetes_service_v1.istio_ingress.spec[0].port : entry.name => entry.port }
 }

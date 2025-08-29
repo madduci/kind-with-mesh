@@ -10,7 +10,7 @@ Clone this repository and set the path to this module in your Project.
 module "istio" {
     source = "path/to/this/module"
 
-    helm_version = "1.26.3"
+    helm_version = "1.27.0"
 }
 ´´´
 
@@ -46,8 +46,8 @@ No modules.
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm Chart Repository URL | `string` | `"https://istio-release.storage.googleapis.com/charts"` | no |
 | <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Istio Helm Chart to be installed | `string` | `"1.27.0"` | no |
 | <a name="input_ingress_annotations"></a> [ingress\_annotations](#input\_ingress\_annotations) | The annotations to be used for the ingress gateway | <pre>list(object({<br/>    name  = string<br/>    value = string<br/>  }))</pre> | `[]` | no |
-| <a name="input_local_node_ports_istio"></a> [local\_node\_ports\_istio](#input\_local\_node\_ports\_istio) | Defines the node ports to use with the local cluster (kind) | <pre>list(object({<br/>    port       = number<br/>    targetPort = number<br/>    name       = string<br/>    protocol   = string<br/>    nodePort   = string<br/>  }))</pre> | <pre>[<br/>  {<br/>    "name": "status-port",<br/>    "nodePort": 30002,<br/>    "port": 15021,<br/>    "protocol": "TCP",<br/>    "targetPort": 15021<br/>  },<br/>  {<br/>    "name": "http2",<br/>    "nodePort": 30000,<br/>    "port": 80,<br/>    "protocol": "TCP",<br/>    "targetPort": 80<br/>  },<br/>  {<br/>    "name": "https",<br/>    "nodePort": 30001,<br/>    "port": 443,<br/>    "protocol": "TCP",<br/>    "targetPort": 443<br/>  }<br/>]</pre> | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where to install the services | `string` | `"istio-system"` | no |
+| <a name="input_port_configuration"></a> [port\_configuration](#input\_port\_configuration) | Defines the configuration of the ports to be used by the Istio Ingress Gateway | <pre>map(object({<br/>    app_protocol = string<br/>    node_port    = number<br/>    host_port    = number<br/>    target_port  = number<br/>    protocol     = string<br/>  }))</pre> | <pre>{<br/>  "http": {<br/>    "app_protocol": "http",<br/>    "host_port": 80,<br/>    "node_port": 30000,<br/>    "protocol": "TCP",<br/>    "target_port": 80<br/>  },<br/>  "https": {<br/>    "app_protocol": "https",<br/>    "host_port": 443,<br/>    "node_port": 30001,<br/>    "protocol": "TCP",<br/>    "target_port": 443<br/>  },<br/>  "status-port": {<br/>    "app_protocol": "http",<br/>    "host_port": 15021,<br/>    "node_port": 30002,<br/>    "protocol": "TCP",<br/>    "target_port": 15021<br/>  }<br/>}</pre> | no |
 | <a name="input_replica_count"></a> [replica\_count](#input\_replica\_count) | The number of replicas that have to be configured for the services | `number` | `3` | no |
 | <a name="input_trace_sampling"></a> [trace\_sampling](#input\_trace\_sampling) | The sampling rate option can be used to control what percentage of requests get reported to your tracing system. (https://istio.io/latest/docs/tasks/observability/distributed-tracing/mesh-and-proxy-config/#customizing-trace-sampling) | `string` | `"1.0"` | no |
 | <a name="input_tracer_address"></a> [tracer\_address](#input\_tracer\_address) | Address of the tracer to be used | `string` | `""` | no |
@@ -57,6 +57,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_istio_http_port"></a> [istio\_http\_port](#output\_istio\_http\_port) | The Istio HTTP port |
-| <a name="output_istio_https_port"></a> [istio\_https\_port](#output\_istio\_https\_port) | The Istio HTTPS port |
+| <a name="output_ingress_port_info"></a> [ingress\_port\_info](#output\_ingress\_port\_info) | Information about the Istio Ingress Ports |
 <!-- END_TF_DOCS -->

@@ -27,3 +27,11 @@ The following tools are required for this project:
 ## Creating the Cluster
 
 Please see the `examples`, corresponding to the type of cluster that you want to bootstrap (with nginx, istio or cilium).
+
+You can create a cluster from the root path of this repository, by typing one of the following commands:
+
+`make create-cluster-nginx` for a KIND cluster with the nginx Ingress controller
+
+`make create-cluster-istio` for a KIND cluster with the Istio service mesh components
+
+`make create-cluster-cilium` for a KIND cluster with the Cilium service mesh components

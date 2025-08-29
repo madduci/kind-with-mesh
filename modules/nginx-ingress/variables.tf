@@ -34,31 +34,35 @@ variable "toleration_label" {
   }
 }
 
-variable "local_node_ports" {
-  description = "Defines the node ports to use with the local cluster (kind)"
-  type = list(object({
+variable "port_configuration" {
+  type = map(object({
     app_protocol = string
-    name         = string
-    target_port  = string
-    protocol     = string
-    port         = number
     node_port    = number
+    host_port    = number
+    target_port  = number
+    protocol     = string
   }))
-  default = [
-    {
+  description = "Defines the configuration of the ports to be used by the Ingress Controller"
+
+  validation {
+    condition     = contains(keys(var.port_configuration), "http") && contains(keys(var.port_configuration), "https")
+    error_message = "The configuration must include 'http' and 'https' configurations"
+  }
+
+  default = {
+    http = {
       app_protocol = "http"
-      name         = "http"
-      target_port  = "http"
-      protocol     = "TCP"
-      port         = 80
       node_port    = 30000
-    },
-    {
-      app_protocol = "https"
-      name         = "https"
-      target_port  = "https"
+      host_port    = 80
+      target_port  = 80
       protocol     = "TCP"
-      port         = 443
+    }
+    https = {
+      app_protocol = "https"
       node_port    = 30001
-  }]
+      host_port    = 443
+      target_port  = 443
+      protocol     = "TCP"
+    }
+  }
 }
