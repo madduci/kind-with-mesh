@@ -1,6 +1,6 @@
 module "kind" {
   source               = "../../modules/kind-cluster"
-  cluster_name         = "local-cluster"
+  cluster_name         = "local-cluster-nginx"
   worker_nodes         = 1
   kubeconfig_save_path = "./kubeconfig"
 

@@ -35,3 +35,7 @@ You can create a cluster from the root path of this repository, by typing one of
 `make create-cluster-istio` for a KIND cluster with the Istio service mesh components
 
 `make create-cluster-cilium` for a KIND cluster with the Cilium service mesh components
+
+### Running multiple clusters on the same host
+
+It is possible to run multiple clusters on the same machine, all you need to do is to modify the port configuration of the additional clusters, specifically the `node_port` and the `host_port` must be different and not overlap with previously used ones, in the `example` folders.

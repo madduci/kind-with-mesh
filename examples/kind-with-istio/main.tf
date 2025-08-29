@@ -1,6 +1,6 @@
 module "kind" {
   source               = "../../modules/kind-cluster"
-  cluster_name         = "local-cluster"
+  cluster_name         = "local-cluster-istio"
   worker_nodes         = 2
   kubeconfig_save_path = "./kubeconfig"
 

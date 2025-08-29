@@ -1,5 +1,5 @@
 module "kind" {
-  source               = "../../modules/kind-cluster"
+  source               = "../../modules/kind-cluster-cilium"
   cluster_name         = "local-cluster"
   worker_nodes         = 2
   kubeconfig_save_path = "./kubeconfig"
