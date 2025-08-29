@@ -3,16 +3,15 @@ terraform {
   required_providers {
     kind = {
       source  = "tehcyx/kind"
-      version = "0.8.0"
+      version = "0.9.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "2.17.0"
+      version = "3.0.2"
     }
-
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.36.0"
+      version = "2.38.0"
     }
   }
 }
@@ -20,7 +19,7 @@ terraform {
 provider "kind" {}
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = module.kind.kubeconfig_path
   }
 }

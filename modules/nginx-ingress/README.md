@@ -9,7 +9,7 @@ Clone this repository and set the path to this module in your Project.
 ´´´hcl
 module "nginx_ingress" {
     source = "path/to/this/module"
-    helm_version = "4.12.2"
+    helm_version = "4.12.5"
 }
 ´´´
 
@@ -19,15 +19,8 @@ module "nginx_ingress" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.17.0, < 3.0.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 3.0.0, < 4.0.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.36.0, < 3.0.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.17.0, < 3.0.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.36.0, < 3.0.0 |
 
 ## Modules
 
@@ -45,7 +38,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm Chart Repository URL | `string` | `"https://kubernetes.github.io/ingress-nginx"` | no |
-| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the nginx Ingress Controller Helm Chart to be installed | `string` | `"4.12.2"` | no |
+| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the nginx Ingress Controller Helm Chart to be installed | `string` | `"4.12.5"` | no |
 | <a name="input_local_node_ports"></a> [local\_node\_ports](#input\_local\_node\_ports) | Defines the node ports to use with the local cluster (kind) | <pre>list(object({<br/>    app_protocol = string<br/>    name         = string<br/>    target_port  = string<br/>    protocol     = string<br/>    port         = number<br/>    node_port    = number<br/>  }))</pre> | <pre>[<br/>  {<br/>    "app_protocol": "http",<br/>    "name": "http",<br/>    "node_port": 30000,<br/>    "port": 80,<br/>    "protocol": "TCP",<br/>    "target_port": "http"<br/>  },<br/>  {<br/>    "app_protocol": "https",<br/>    "name": "https",<br/>    "node_port": 30001,<br/>    "port": 443,<br/>    "protocol": "TCP",<br/>    "target_port": "https"<br/>  }<br/>]</pre> | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where to install the services | `string` | `"ingress-nginx"` | no |
 | <a name="input_toleration_label"></a> [toleration\_label](#input\_toleration\_label) | Defines label to be used for toleration when deploying the Ingress Controller | `string` | `"node-role.kubernetes.io/control-plane"` | no |

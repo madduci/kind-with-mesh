@@ -10,7 +10,7 @@ Clone this repository and set the path to this module in your Project.
 module "kind" {
     source = "path/to/this/module"
     
-    kubernetes_version = "1.33.1"
+    kubernetes_version = "1.34.0"
     cluster_name = "my_local_cluster"
     worker_nodes = 2 # Create two worker nodes
     kubeconfig_save_path = "./kubeconfig"
@@ -23,13 +23,7 @@ module "kind" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | >= 0.8.0, < 1.0.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_kind"></a> [kind](#provider\_kind) | >= 0.8.0, < 1.0.0 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | >= 0.9.0, < 1.0.0 |
 
 ## Modules
 
@@ -47,7 +41,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Defines the name of the cluster | `string` | `"local-cluster"` | no |
 | <a name="input_kubeconfig_save_path"></a> [kubeconfig\_save\_path](#input\_kubeconfig\_save\_path) | Defines the path to save the kubeconfig file | `string` | `"kubeconfig"` | no |
-| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Defines the kubernetes version to be used | `string` | `"v1.33.1"` | no |
+| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | Defines the kubernetes version to be used | `string` | `"v1.34.0"` | no |
 | <a name="input_worker_nodes"></a> [worker\_nodes](#input\_worker\_nodes) | Defines the number of worker nodes to be created | `number` | `1` | no |
 
 ## Outputs

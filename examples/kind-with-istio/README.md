@@ -13,7 +13,7 @@ The following tools are required for this project:
 * `docker` (up and running)
 * `terraform` (1.6+) / `opentofu` (1.6+)
 * `helm` (3.0+)
-* `kind` (0.22.0+)
+* `kind` (0.30.0+)
 
 ## How to run the example
 

@@ -13,7 +13,7 @@ resource "helm_release" "nextcloud" {
   name       = "nextcloud"
   chart      = "nextcloud"
   repository = "https://nextcloud.github.io/helm/"
-  version    = "6.6.2"
+  version    = "7.0.2"
   namespace  = kubernetes_namespace_v1.workshop.metadata[0].name
   lint       = true
   atomic     = true
@@ -39,5 +39,5 @@ resource "kubernetes_ingress_v1" "nextcloud" {
     }
   }
 
-  depends_on = [helm_release.nextcloud, module.nginx_ingress.0]
+  depends_on = [helm_release.nextcloud, module.nginx_ingress[0]]
 }

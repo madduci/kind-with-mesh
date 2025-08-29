@@ -8,40 +8,33 @@ resource "helm_release" "cilium" {
   atomic     = true
   wait       = true
 
-  set {
+  set = [{
     name  = "ipam.mode"
     value = "kubernetes"
-  }
-
-  set {
-    name  = "ingressController.service.type"
-    value = "NodePort"
-  }
-
-  set {
-    name  = "ingressController.service.insecureNodePort"
-    value = var.node_port_http
-  }
-
-  set {
-    name  = "ingressController.service.secureNodePort"
-    value = var.node_port_https
-  }
-
-  set {
-    name  = "ingressController.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "ingressController.default"
-    value = "true"
-  }
-
-  set {
-    name  = "ingressController.loadbalancerMode"
-    value = "shared"
-  }
+    },
+    {
+      name  = "ingressController.service.type"
+      value = "NodePort"
+    },
+    {
+      name  = "ingressController.service.insecureNodePort"
+      value = var.node_port_http
+    },
+    {
+      name  = "ingressController.service.secureNodePort"
+      value = var.node_port_https
+      }, {
+      name  = "ingressController.enabled"
+      value = "true"
+    },
+    {
+      name  = "ingressController.default"
+      value = "true"
+    },
+    {
+      name  = "ingressController.loadbalancerMode"
+      value = "shared"
+  }]
 }
 
 data "kubernetes_service_v1" "cilium_ingress" {
