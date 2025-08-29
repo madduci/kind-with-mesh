@@ -42,10 +42,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_external_ip"></a> [external\_ip](#input\_external\_ip) | The external IP of the ingress gateway, only single IP is supported | `string` | `""` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm Chart Repository URL | `string` | `"https://istio-release.storage.googleapis.com/charts"` | no |
 | <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Istio Helm Chart to be installed | `string` | `"1.27.0"` | no |
-| <a name="input_ingress_annotations"></a> [ingress\_annotations](#input\_ingress\_annotations) | The annotations to be used for the ingress gateway | <pre>list(object({<br/>    name  = string<br/>    value = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where to install the services | `string` | `"istio-system"` | no |
 | <a name="input_port_configuration"></a> [port\_configuration](#input\_port\_configuration) | Defines the configuration of the ports to be used by the Istio Ingress Gateway | <pre>map(object({<br/>    app_protocol = string<br/>    node_port    = number<br/>    host_port    = number<br/>    target_port  = number<br/>    protocol     = string<br/>  }))</pre> | <pre>{<br/>  "http": {<br/>    "app_protocol": "http",<br/>    "host_port": 80,<br/>    "node_port": 30000,<br/>    "protocol": "TCP",<br/>    "target_port": 80<br/>  },<br/>  "https": {<br/>    "app_protocol": "https",<br/>    "host_port": 443,<br/>    "node_port": 30001,<br/>    "protocol": "TCP",<br/>    "target_port": 443<br/>  },<br/>  "status-port": {<br/>    "app_protocol": "http",<br/>    "host_port": 15021,<br/>    "node_port": 30002,<br/>    "protocol": "TCP",<br/>    "target_port": 15021<br/>  }<br/>}</pre> | no |
 | <a name="input_replica_count"></a> [replica\_count](#input\_replica\_count) | The number of replicas that have to be configured for the services | `number` | `3` | no |

@@ -39,7 +39,7 @@ resource "kind_cluster" "cluster" {
 
     containerd_config_patches = [
       <<-YAML
-      networking.disableDefaultCNI = true
+      networking.disableDefaultCNI = ${var.disable_default_cni}
       YAML
     ]
   }

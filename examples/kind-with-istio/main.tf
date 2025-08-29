@@ -5,6 +5,8 @@ module "kind" {
   kubeconfig_save_path = "./kubeconfig"
 
   port_configuration = var.port_configuration
+  # Use Istio as CNI
+  disable_default_cni = true
 }
 
 module "istio" {

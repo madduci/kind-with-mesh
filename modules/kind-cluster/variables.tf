@@ -38,6 +38,12 @@ variable "kubeconfig_save_path" {
   }
 }
 
+variable "disable_default_cni" {
+  type        = bool
+  default     = false
+  description = "If true, disables the default CNI (Container Network Interface) plugin in the kind cluster"
+}
+
 variable "port_configuration" {
   type = map(object({
     app_protocol = string
