@@ -101,6 +101,12 @@ resource "helm_release" "istio_ingressgateway" {
 
   depends_on = [helm_release.istiod]
 
+  values = [<<-YAML
+    labels:
+      ingress-ready: "true"
+  YAML  
+  ]
+
   set = concat([
     {
       name  = "autoscaling.enabled"
@@ -130,7 +136,7 @@ resource "helm_release" "istio_egressgateway" {
   depends_on = [helm_release.istiod]
 
   values = [<<-YAML
-    gateway.selectorLabels:
+    labels:
       ingress-ready: "true"
   YAML  
   ]
