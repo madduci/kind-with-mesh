@@ -1,6 +1,6 @@
 variable "kubernetes_version" {
   type        = string
-  default     = "v1.34.0"
+  default     = "v1.34.1"
   description = "Defines the kubernetes version to be used"
   validation {
     condition     = can(regex("v[0-9]+.[0-9]+.[0-9]+", var.kubernetes_version))
