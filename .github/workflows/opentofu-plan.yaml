@@ -35,8 +35,8 @@ jobs:
     - name: Setup OpenTofu
       uses: opentofu/setup-opentofu@v1
 
-    - name: Tofu Plan
-      run: cd examples/kind-with-${{matrix.type}} && tofu init && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
+    - name: Tofu Plan with simulated kubeconfig
+      run: cd examples/kind-with-${{matrix.type}} && tofu init && touch kubeconfig && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
 
     - name: Output Plan
       run: cat examples/kind-with-${{matrix.type}}/tfplan.json

@@ -35,8 +35,8 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: Terraform Plan
-      run: cd examples/kind-with-${{matrix.type}} && terraform init && terraform plan -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
+    - name: Terraform Plan with simulated kubeconfig
+      run: cd examples/kind-with-${{matrix.type}} && terraform init && touch kubeconfig && terraform plan -no-color -out=tfplan.out && terraform show -json tfplan.out > tfplan.json
 
     - name: Output Plan
       run: cat examples/kind-with-${{matrix.type}}/tfplan.json
