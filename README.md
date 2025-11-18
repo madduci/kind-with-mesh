@@ -2,14 +2,13 @@
 
 [![Terraform Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/terraform-plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/terraform-plan.yaml) [![OpenTofu Plan](https://github.com/madduci/kind-with-mesh/actions/workflows/opentofu-plan.yaml/badge.svg)](https://github.com/madduci/kind-with-mesh/actions/workflows/opentofu-plan.yaml)
 
-This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring optionally one between NGINX-Ingress (default), Istio or Cilium.
+This Terraform project allows an user create a local Kubernetes Cluster using the [Kubernetes-in-Docker Stack](https://github.com/kubernetes-sigs/kind) (KIND) and configuring optionally one between Istio or Cilium.
 
 The following steps are performed within the project:
 
 * A local cluster composed by a Control-Plane node and one or more Worker-Nodes is bootstrapped (defaults to 3)
 * The Ports 80, 443, 9879 and 15021 are bound on the host, mapping NodePorts on the Control-Plane Node
 * A `kubeconfig` file is created locally in the project folder
-* The namespace `ingress-nginx` with the NGINX Ingress controller is created, if it is enabled
 * The namespace `istio-system` with the basic Istio services is created, if Istio is enabled
 * When choosing Cilium, the services will be installed in the `kube-system` namespace
 
@@ -26,11 +25,9 @@ The following tools are required for this project:
 
 ## Creating the Cluster
 
-Please see the `examples`, corresponding to the type of cluster that you want to bootstrap (with nginx, istio or cilium).
+Please see the `examples`, corresponding to the type of cluster that you want to bootstrap (with istio or cilium).
 
 You can create a cluster from the root path of this repository, by typing one of the following commands:
-
-`make create-cluster-nginx` for a KIND cluster with the nginx Ingress controller
 
 `make create-cluster-istio` for a KIND cluster with the Istio service mesh components
 

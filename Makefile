@@ -24,21 +24,11 @@ help:
 	$(info Usage: make <target>)
 	$(info )
 	$(info Available targets:)
-	$(info - create-cluster-nginx:   creates the cluster with nginx ingress)
-	$(info - destroy-cluster-nginx:  deletes the cluster with nginx ingress)
-	$(info )
 	$(info - create-cluster-cilium:  creates the cluster with Cilium enabled)
 	$(info - destroy-cluster-cilium: deletes the cluster with Cilium enabled)
 	$(info )
 	$(info - create-cluster-istio:   creates the cluster with Istio enabled)
 	$(info - destroy-cluster-istio:  deletes the cluster with Istio enabled)
-
-.PHONY: create-cluster-nginx
-create-cluster-nginx: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-nginx
-create-cluster-nginx: init
-create-cluster-nginx: apply
-create-cluster-nginx: ## Creates a local cluster with nginx ingress
-	@echo "Created the cluster with nginx ingress"
 
 .PHONY: create-cluster-istio
 create-cluster-istio: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio
@@ -53,12 +43,6 @@ create-cluster-cilium: init
 create-cluster-cilium: apply
 create-cluster-cilium: ## Creates a local cluster with Cilium enabled
 	@echo "Created the cluster with Cilium enabled"
-
-.PHONY: destroy-cluster-nginx
-destroy-cluster-nginx: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-nginx
-destroy-cluster-nginx: destroy
-destroy-cluster-nginx: ## Destroys a previously created local cluster with nginx ingress
-	@echo "Created the cluster with nginx ingress"
 
 .PHONY: destroy-cluster-istio
 destroy-cluster-istio: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio
