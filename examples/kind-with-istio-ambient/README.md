@@ -69,11 +69,17 @@ and all the resources will be deleted.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_gateway"></a> [gateway](#module\_gateway) | ../../modules/gateway_api | n/a |
+| <a name="module_istio"></a> [istio](#module\_istio) | ../../modules/istio-mesh | n/a |
 | <a name="module_kind"></a> [kind](#module\_kind) | ../../modules/kind-cluster | n/a |
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [kubernetes_manifest.gateway](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/manifest) | resource |
+| [kubernetes_namespace_v1.ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
+| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
+| [null_resource.install_example](https://registry.terraform.io/providers/hashicorp/null/3.2.4/docs/resources/resource) | resource |
 
 ## Inputs
 

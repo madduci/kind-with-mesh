@@ -82,19 +82,20 @@ resource "helm_release" "istiod" {
       value = var.tracer_type
     }
     ],
-     var.tracer_type != "none" ? [{
+    var.tracer_type != "none" ? [{
       name  = "meshConfig.tracing.${var.tracer_type}.address"
       value = var.tracer_address
     }] : [],
     var.enable_ambient_mode ? [{
       name  = "profile"
       value = "ambient"
-    }] : [])
+  }] : [])
 
   depends_on = [helm_release.istio_base]
 }
 
 resource "helm_release" "istio_ingressgateway" {
+  count      = var.enable_ambient_mode ? 0 : 1
   name       = "istio-ingressgateway"
   chart      = "gateway"
   repository = var.helm_repository
@@ -129,6 +130,7 @@ resource "helm_release" "istio_ingressgateway" {
 }
 
 resource "helm_release" "istio_egressgateway" {
+  count      = var.enable_ambient_mode ? 0 : 1
   name       = "istio-egressgateway"
   chart      = "gateway"
   repository = var.helm_repository
@@ -162,24 +164,40 @@ resource "helm_release" "istio_cni" {
   chart      = "cni"
   repository = var.helm_repository
   version    = var.helm_version
-  namespace  = local.target_namespace
+  namespace  = "istio-system"
   lint       = true
   atomic     = true
   wait       = true
 
   set = concat(var.enable_ambient_mode ? [{
-      name  = "profile"
-      value = "ambient"
-    }] : [])
+    name  = "profile"
+    value = "ambient"
+  }] : [])
 
   depends_on = [helm_release.istiod]
 }
 
 data "kubernetes_service_v1" "istio_ingress" {
+  count = var.enable_ambient_mode ? 0 : 1
   metadata {
     name      = "istio-ingressgateway"
     namespace = local.target_namespace
   }
 
   depends_on = [helm_release.istio_ingressgateway]
+}
+
+resource "helm_release" "istio_ztunnel" {
+  count = var.enable_ambient_mode ? 1 : 0
+
+  name       = "istio-ztunnel"
+  chart      = "ztunnel"
+  repository = var.helm_repository
+  version    = var.helm_version
+  namespace  = "istio-system"
+  lint       = true
+  atomic     = true
+  wait       = true
+
+  depends_on = [helm_release.istio_cni]
 }

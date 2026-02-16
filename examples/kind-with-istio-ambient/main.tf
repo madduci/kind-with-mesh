@@ -14,9 +14,10 @@ module "gateway" {
   kubeconfig_path = module.kind.kubeconfig_path
 }
 
-#module "istio" {
-#  source     = "../../modules/istio-mesh"
-#  depends_on = [module.kind.kubeconfig_path]
-#
-#  port_configuration = var.port_configuration
-#}
+module "istio" {
+  source     = "../../modules/istio-mesh"
+  depends_on = [module.kind.kubeconfig_path]
+
+  port_configuration  = var.port_configuration
+  enable_ambient_mode = true
+}
