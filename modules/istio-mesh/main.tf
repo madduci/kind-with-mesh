@@ -81,10 +81,15 @@ resource "helm_release" "istiod" {
       name  = "global.proxy.tracer"
       value = var.tracer_type
     }
-    ], var.tracer_type != "none" ? [{
+    ],
+     var.tracer_type != "none" ? [{
       name  = "meshConfig.tracing.${var.tracer_type}.address"
       value = var.tracer_address
-  }] : [])
+    }] : [],
+    var.enable_ambient_mode ? [{
+      name  = "profile"
+      value = "ambient"
+    }] : [])
 
   depends_on = [helm_release.istio_base]
 }
@@ -161,6 +166,11 @@ resource "helm_release" "istio_cni" {
   lint       = true
   atomic     = true
   wait       = true
+
+  set = concat(var.enable_ambient_mode ? [{
+      name  = "profile"
+      value = "ambient"
+    }] : [])
 
   depends_on = [helm_release.istiod]
 }
