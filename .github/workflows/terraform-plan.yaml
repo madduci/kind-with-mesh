@@ -54,7 +54,7 @@ jobs:
         skip_check: CKV_K8S_25,CKV_K8S_22,CKV_K8S_35,CKV_K8S_26,CKV_K8S_11,CKV_K8S_15,CKV_K8S_12
 
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
         # Results are generated only on a success or failure
         # this is required since GitHub by default won't run the next step
         # when the previous one has failed. Security checks that do not pass will 'fail'.
