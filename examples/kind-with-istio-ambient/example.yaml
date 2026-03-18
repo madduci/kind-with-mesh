@@ -10,7 +10,7 @@ spec:
   rules:
   - backendRefs:
     - name: helloworld
-      port: 8000
+      port: 5000
 ---
 apiVersion: v1
 kind: Service

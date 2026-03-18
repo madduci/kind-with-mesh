@@ -11,3 +11,4 @@ local-cluster-config
 kubeconfig*
 *.yaml
 !example.yaml
+!gateway.yaml
