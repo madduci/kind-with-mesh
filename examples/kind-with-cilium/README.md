@@ -46,9 +46,9 @@ and all the resources will be deleted.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.1.1 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.10.0 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.11.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 3.0.1 |
 
 ## Modules

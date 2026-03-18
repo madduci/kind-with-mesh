@@ -19,6 +19,7 @@ resource "kubernetes_namespace_v1" "ingress" {
 }
 
 resource "kubernetes_manifest" "gateway" {
+  count = fileexists("${path.root}/kubeconfig") ? 1 : 0
   manifest = yamldecode(file("${path.root}/gateway.yaml"))
 
   depends_on = [kubernetes_namespace_v1.ingress]

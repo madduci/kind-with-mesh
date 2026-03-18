@@ -1,6 +1,6 @@
-# kind-with-istio
+# kind-with-istio-sidecar
 
-This example shows how a KIND (Kubernetes-in-Docker) Cluster, configured with Istio, can be created with easy steps.
+This example shows how a KIND (Kubernetes-in-Docker) Cluster, configured with Istio Sidecar Mode, can be created with easy steps.
 
 Additionally, the example will deploy a Workload example taken directly from the [Istio Repository](https://github.com/istio/istio), showing the usage of VirtualService and DestinationRule custom resources
 
@@ -37,6 +37,12 @@ You can now access the example Service at the following address:
 
 `http://localhost/hello`
 
+e.g. with `cURL`: 
+
+```sh
+curl -L http://localhost/hello
+```
+
 You should see the message:
 
 `Hello version: v2, instance: helloworld-v2-<unique-id>`
@@ -58,9 +64,9 @@ and all the resources will be deleted.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.1.1 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.10.0 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.11.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 3.0.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | 3.2.4 |
 

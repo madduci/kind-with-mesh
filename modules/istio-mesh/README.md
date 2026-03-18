@@ -55,5 +55,7 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_ingress_port_info"></a> [ingress\_port\_info](#output\_ingress\_port\_info) | Information about the Istio Ingress Ports |
 <!-- END_TF_DOCS -->

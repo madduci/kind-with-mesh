@@ -9,11 +9,6 @@ module "kind" {
   disable_default_cni = true
 }
 
-#module "gateway" {
-#  source          = "../../modules/gateway_api"
-#  kubeconfig_path = module.kind.kubeconfig_path
-#}
-
 module "istio" {
   source     = "../../modules/istio-mesh"
   depends_on = [module.kind.kubeconfig_path, docker_container.cloud_controller_manager]

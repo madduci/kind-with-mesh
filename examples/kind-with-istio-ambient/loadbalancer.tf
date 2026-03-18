@@ -5,9 +5,9 @@ resource "docker_image" "cloud_controller_manager" {
 
 # Create a container
 resource "docker_container" "cloud_controller_manager" {
-  image = docker_image.cloud_controller_manager.image_id
-  name  = "cloud-provider-kind"
-  rm = true
+  image        = docker_image.cloud_controller_manager.image_id
+  name         = "cloud-provider-kind"
+  rm           = true
   network_mode = "host"
 
   volumes {
