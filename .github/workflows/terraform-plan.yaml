@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        type: [istio, cilium]
+        type: [istio-sidecar, cilium]
 
     name: 'Terraform'
     runs-on: ubuntu-latest
