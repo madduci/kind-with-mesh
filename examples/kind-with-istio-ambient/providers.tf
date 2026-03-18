@@ -1,9 +1,10 @@
 terraform {
-  required_version = ">= 1.6.0"
+  required_version = ">= 1.8.0"
+
   required_providers {
     kind = {
       source  = "tehcyx/kind"
-      version = "0.10.0"
+      version = "0.11.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -16,6 +17,10 @@ terraform {
     null = {
       source  = "hashicorp/null"
       version = "3.2.4"
+    }
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.9.0"
     }
   }
 }
@@ -30,4 +35,8 @@ provider "helm" {
 
 provider "kubernetes" {
   config_path = module.kind.kubeconfig_path
+}
+
+provider "docker" {
+  host = "unix:///var/run/docker.sock"
 }

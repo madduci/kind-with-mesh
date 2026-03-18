@@ -18,13 +18,6 @@ resource "kubernetes_namespace_v1" "ingress" {
   depends_on = [module.istio]
 }
 
-resource "kubernetes_manifest" "gateway" {
-  manifest = yamldecode(file("${path.root}/gateway.yaml"))
-
-  depends_on = [kubernetes_namespace_v1.ingress]
-
-}
-
 # Wait for the cluster to be ready
 resource "null_resource" "install_example" {
   depends_on = [kubernetes_namespace_v1.workshop]
@@ -34,7 +27,7 @@ resource "null_resource" "install_example" {
     hash = filesha256("${path.root}/example.yaml")
   }
   provisioner "local-exec" {
-    command = "kubectl apply --namespace ${kubernetes_namespace_v1.workshop.metadata[0].name} -f ${path.root}/example.yaml"
+    command = "kubectl apply --wait=true --namespace ${kubernetes_namespace_v1.workshop.metadata[0].name} -f ${path.root}/example.yaml"
     environment = {
       "KUBECONFIG" = module.kind.kubeconfig_path
     }
