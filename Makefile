@@ -27,34 +27,44 @@ help:
 	$(info - create-cluster-cilium:  creates the cluster with Cilium enabled)
 	$(info - destroy-cluster-cilium: deletes the cluster with Cilium enabled)
 	$(info )
-	$(info - create-cluster-istio:   creates the cluster with Istio enabled)
-	$(info - destroy-cluster-istio:  deletes the cluster with Istio enabled)
+	$(info - create-cluster-istio-ambient:   creates the cluster with Istio enabled - Ambient Mode)
+	$(info - destroy-cluster-istio-ambient:  deletes the cluster with Istio enabled - Ambient Mode)
+	$(info )
+	$(info - create-cluster-istio-sidecar:   creates the cluster with Istio enabled - Sidecar Mode)
+	$(info - destroy-cluster-istio-sidecar:  deletes the cluster with Istio enabled - Sidecar Mode)
 
-.PHONY: create-cluster-istio
-create-cluster-istio: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio
-create-cluster-istio: init
-create-cluster-istio: apply
-create-cluster-istio: ## Creates a local cluster with Istio enabled
-	@echo "Created the cluster with Istio enabled"
+.PHONY: create-cluster-istio-ambient
+create-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
+create-cluster-istio-ambient: init apply ## Creates a local cluster with Istio (Ambient Mode) enabled
+	@echo "Created the cluster with Istio (Ambient Mode) enabled"
+
+.PHONY: create-cluster-istio-sidecar
+create-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
+create-cluster-istio-sidecar: init apply ## Creates a local cluster with Istio (Sidecar Mode) enabled
+	@echo "Created the cluster with Istio (Sidecar Mode) enabled"
 
 .PHONY: create-cluster-cilium
 create-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
-create-cluster-cilium: init
-create-cluster-cilium: apply
-create-cluster-cilium: ## Creates a local cluster with Cilium enabled
+create-cluster-cilium: init apply ## Creates a local cluster with Cilium enabled
 	@echo "Created the cluster with Cilium enabled"
 
-.PHONY: destroy-cluster-istio
-destroy-cluster-istio: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio
-destroy-cluster-istio: destroy
-destroy-cluster-istio: ## Destroys a previously created local cluster with Istio 
-	@echo "Created the cluster with Istio enabled"
+.PHONY: destroy-cluster-istio-ambient
+destroy-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
+destroy-cluster-istio-ambient: destroy
+destroy-cluster-istio-ambient: ## Destroys a previously created local cluster with Istio (Ambient Mode)
+	@echo "Destroyed the cluster with Istio (Ambient Mode)"
+
+.PHONY: destroy-cluster-istio-sidecar
+destroy-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
+destroy-cluster-istio-sidecar: destroy
+destroy-cluster-istio-sidecar: ## Destroys a previously created local cluster with Istio (Sidecar Mode)
+	@echo "Destroyed the cluster with Istio (Sidecar Mode)"
 
 .PHONY: destroy-cluster-cilium
 destroy-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
 destroy-cluster-cilium: destroy
 destroy-cluster-cilium: ## Destroys a previously created local cluster with Cilium
-	@echo "Created the cluster with Cilium enabled"
+	@echo "Destroyed the cluster with Cilium"
 
 .PHONY: fmt
 fmt: ## Performs auto-formatting of the code
@@ -76,7 +86,7 @@ docs: ## Generates documentation for all terraform modules
 
 init: ## Initializes the working directory
 	cd $(WORKING_PATH)
-	$(TF_BIN) init -upgrade -reconfigure
+	$(TF_BIN) init
 	$(TF_BIN) validate
 	cd -
 

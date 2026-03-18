@@ -1,10 +1,12 @@
-# kind-with-istio
+# kind-with-istio-ambient
 
-This example shows how a KIND (Kubernetes-in-Docker) Cluster, configured with Istio, can be created with easy steps.
+This example shows how a KIND (Kubernetes-in-Docker) Cluster, configured with Istio in Ambient Mode, can be created with easy steps.
 
-Additionally, the example will deploy a Workload example taken directly from the [Istio Repository](https://github.com/istio/istio), showing the usage of VirtualService and DestinationRule custom resources
+The configuration of the Gateway API Controller is perfomed with the `docker` Provider, following [this guide](https://kubernetes.io/blog/2026/01/28/experimenting-gateway-api-with-kind/).
 
-The Istio Gateway will map the port 80 and expose the Service through it. If you want to use the HTTPS port, you need to customise the `example.yaml` file and also register a valid key pair to be used for the TLS communication.
+Additionally, the example will deploy a Workload example taken directly from the [Istio Repository](https://github.com/istio/istio),
+
+The Gateway API Controller will map the port 80 and expose the Service through it. If you want to use the HTTPS port, you need to customise the `example.yaml` file and also register a valid key pair to be used for the TLS communication.
 
 ## Requirements
 
@@ -24,6 +26,8 @@ export TF_BIN=tofu # change to `terraform` if you want to use Terraform instead 
 $TF_BIN init
 $TF_BIN plan
 $TF_BIN apply
+# Apply again to overcome a bug with the Kubernetes Provider while applying the Manifest for Gateway
+$TF_BIN apply
 ```
 
 After the completion of the above described commands, if no error has been returned, you should see that 2 Containers are running: 
@@ -36,6 +40,13 @@ Additionally, a new file, `kubeconfig`, will be placed in this folder, giving yo
 You can now access the example Service at the following address:
 
 `http://localhost/hello`
+
+e.g. with `cURL`: 
+
+```sh
+GW_ADDR=$(kubectl get gateway -n istio-ingress gateway -o jsonpath='{.status.addresses[0].value}')
+curl --resolve helloworld.example.com:80:$GW_ADDR http://helloworld.example.com/hello 
+```
 
 You should see the message:
 
@@ -58,9 +69,10 @@ and all the resources will be deleted.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | 3.9.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.1.1 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.10.0 |
+| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.11.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 3.0.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | 3.2.4 |
 
@@ -75,6 +87,10 @@ and all the resources will be deleted.
 
 | Name | Type |
 |------|------|
+| [docker_container.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/3.9.0/docs/resources/container) | resource |
+| [docker_image.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/3.9.0/docs/resources/image) | resource |
+| [kubernetes_manifest.gateway](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/manifest) | resource |
+| [kubernetes_namespace_v1.ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
 | [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
 | [null_resource.install_example](https://registry.terraform.io/providers/hashicorp/null/3.2.4/docs/resources/resource) | resource |
 
@@ -86,7 +102,5 @@ and all the resources will be deleted.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_istio_ingress_port_info"></a> [istio\_ingress\_port\_info](#output\_istio\_ingress\_port\_info) | The Istio Ingress Information |
+No outputs.
 <!-- END_TF_DOCS -->

@@ -98,3 +98,9 @@ variable "tracer_address" {
   type        = string
   default     = ""
 }
+
+variable "enable_ambient_mode" {
+  description = "Whether to enable ambient mode for the Istio Mesh"
+  type        = bool
+  default     = false
+}
