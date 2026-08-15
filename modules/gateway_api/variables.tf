@@ -1,7 +1,7 @@
 variable "release_version" {
   description = "The version of the release to deploy"
   type        = string
-  default     = "v1.4.1"
+  default     = "v1.6.1"
 
   validation {
     condition     = can(regex("^v?\\d+\\.\\d+\\.\\d+$", var.release_version))
