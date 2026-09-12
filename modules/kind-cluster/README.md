@@ -10,7 +10,7 @@ Clone this repository and set the path to this module in your Project.
 module "kind" {
     source = "path/to/this/module"
     
-    kubernetes_version = "1.34.0"
+    kubernetes_version = "1.37.0"
     cluster_name = "my_local_cluster"
     worker_nodes = 2 # Create two worker nodes
     kubeconfig_save_path = "./kubeconfig"

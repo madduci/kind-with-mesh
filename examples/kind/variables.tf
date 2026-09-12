@@ -22,11 +22,13 @@ variable "port_configuration" {
       host_port    = 443
       target_port  = 443
       protocol     = "TCP"
+    },
+    status-port = {
+      app_protocol = "http"
+      node_port    = 30002
+      host_port    = 15021
+      target_port  = 15021
+      protocol     = "TCP"
     }
   }
-}
-
-variable "kubeconfig_path" {
-  type        = string
-  description = "Path to the kubeconfig file for the cluster"
 }

@@ -11,7 +11,7 @@ variable "namespace" {
 variable "helm_version" {
   description = "The version of the Istio Helm Chart to be installed"
   type        = string
-  default     = "1.30.3"
+  default     = "1.31.0"
   validation {
     condition     = can(regex("^[0-9]+.[0-9]+.[0-9]+$", var.helm_version))
     error_message = "The Helm version must be in the format x.y.z"
@@ -21,7 +21,7 @@ variable "helm_version" {
 variable "helm_repository" {
   type        = string
   description = "Helm Chart Repository URL"
-  default     = "https://istio-release.storage.googleapis.com/charts"
+  default     = "https://blob.istio.io/istio-release/charts"
   validation {
     condition     = can(regex("https://.*", var.helm_repository)) || can(regex("oci://.*", var.helm_repository))
     error_message = "The Helm Repository URL must start with https:// or oci://"

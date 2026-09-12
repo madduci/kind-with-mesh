@@ -24,47 +24,58 @@ help:
 	$(info Usage: make <target>)
 	$(info )
 	$(info Available targets:)
-	$(info - create-cluster-cilium:  creates the cluster with Cilium enabled)
-	$(info - destroy-cluster-cilium: deletes the cluster with Cilium enabled)
+	$(info - install-cluster-cilium:  creates the cluster with Cilium enabled)
+	$(info - uninstall-cluster-cilium: deletes the cluster with Cilium enabled)
 	$(info )
-	$(info - create-cluster-istio-ambient:   creates the cluster with Istio enabled - Ambient Mode)
-	$(info - destroy-cluster-istio-ambient:  deletes the cluster with Istio enabled - Ambient Mode)
+	$(info - install-cluster-istio-ambient:   creates the cluster with Istio enabled - Ambient Mode)
+	$(info - uninstall-cluster-istio-ambient:  deletes the cluster with Istio enabled - Ambient Mode)
 	$(info )
-	$(info - create-cluster-istio-sidecar:   creates the cluster with Istio enabled - Sidecar Mode)
-	$(info - destroy-cluster-istio-sidecar:  deletes the cluster with Istio enabled - Sidecar Mode)
+	$(info - install-cluster-istio-sidecar:   creates the cluster with Istio enabled - Sidecar Mode)
+	$(info - uninstall-cluster-istio-sidecar:  deletes the cluster with Istio enabled - Sidecar Mode)
 
-.PHONY: create-cluster-istio-ambient
-create-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
-create-cluster-istio-ambient: init apply ## Creates a local cluster with Istio (Ambient Mode) enabled
-	@echo "Created the cluster with Istio (Ambient Mode) enabled"
+.PHONY: create-cluster
+create-cluster: export WORKING_PATH=$(ROOT_DIR)/examples/kind
+create-cluster: init apply ## Creates a local cluster with Istio (Ambient Mode) enabled
+	@echo "Created the cluster"
 
-.PHONY: create-cluster-istio-sidecar
-create-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
-create-cluster-istio-sidecar: init apply ## Creates a local cluster with Istio (Sidecar Mode) enabled
-	@echo "Created the cluster with Istio (Sidecar Mode) enabled"
+.PHONY: install-cluster-istio-ambient
+install-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
+install-cluster-istio-ambient: init apply ## Creates a local cluster with Istio (Ambient Mode) enabled
+	@echo "Installed Istio (Ambient Mode) enabled"
 
-.PHONY: create-cluster-cilium
-create-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
-create-cluster-cilium: init apply ## Creates a local cluster with Cilium enabled
-	@echo "Created the cluster with Cilium enabled"
+.PHONY: install-cluster-istio-sidecar
+install-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
+install-cluster-istio-sidecar: init apply ## Creates a local cluster with Istio (Sidecar Mode) enabled
+	@echo "Installed Istio (Sidecar Mode) enabled"
 
-.PHONY: destroy-cluster-istio-ambient
-destroy-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
-destroy-cluster-istio-ambient: destroy
-destroy-cluster-istio-ambient: ## Destroys a previously created local cluster with Istio (Ambient Mode)
-	@echo "Destroyed the cluster with Istio (Ambient Mode)"
+.PHONY: install-cluster-cilium
+install-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
+install-cluster-cilium: init apply ## Creates a local cluster with Cilium enabled
+	@echo "Installed Cilium enabled"
 
-.PHONY: destroy-cluster-istio-sidecar
-destroy-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
-destroy-cluster-istio-sidecar: destroy
-destroy-cluster-istio-sidecar: ## Destroys a previously created local cluster with Istio (Sidecar Mode)
-	@echo "Destroyed the cluster with Istio (Sidecar Mode)"
+.PHONY: destroy-cluster
+destroy-cluster: export WORKING_PATH=$(ROOT_DIR)/examples/kind
+destroy-cluster: destroy
+destroy-cluster: ## Destroys a previously created local cluster
+	@echo "Destroyed the cluster"
 
-.PHONY: destroy-cluster-cilium
-destroy-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
-destroy-cluster-cilium: destroy
-destroy-cluster-cilium: ## Destroys a previously created local cluster with Cilium
-	@echo "Destroyed the cluster with Cilium"
+.PHONY: uninstall-cluster-istio-ambient
+uninstall-cluster-istio-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-ambient
+uninstall-cluster-istio-ambient: destroy
+uninstall-cluster-istio-ambient: ## Destroys a previously created local cluster with Istio (Ambient Mode)
+	@echo "Uninstalled Istio (Ambient Mode)"
+
+.PHONY: uninstall-cluster-istio-sidecar
+uninstall-cluster-istio-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-istio-sidecar
+uninstall-cluster-istio-sidecar: destroy
+uninstall-cluster-istio-sidecar: ## Destroys a previously created local cluster with Istio (Sidecar Mode)
+	@echo "Uninstalled Istio (Sidecar Mode)"
+
+.PHONY: uninstall-cluster-cilium
+uninstall-cluster-cilium: export WORKING_PATH=$(ROOT_DIR)/examples/kind-with-cilium
+uninstall-cluster-cilium: destroy
+uninstall-cluster-cilium: ## Uninstalls a previously created local cluster with Cilium
+	@echo "Uninstalled Cilium"
 
 .PHONY: fmt
 fmt: ## Performs auto-formatting of the code
