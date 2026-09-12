@@ -15,11 +15,6 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
 
-    strategy:
-      fail-fast: false
-      matrix:
-        type: [istio-sidecar, cilium]
-
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
@@ -36,17 +31,17 @@ jobs:
       uses: opentofu/setup-opentofu@v1
 
     - name: Tofu Plan with simulated kubeconfig
-      run: cd examples/kind-with-${{matrix.type}} && tofu init && touch kubeconfig && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
+      run: cd examples/kind && tofu init && touch kubeconfig && tofu plan -no-color -out=tfplan.out && tofu show -json tfplan.out > tfplan.json
 
     - name: Output Plan
-      run: cat examples/kind-with-${{matrix.type}}/tfplan.json
+      run: cat examples/kind/tfplan.json
 
     - name: Checkov Analysis
       id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
-        directory: examples/kind-with-${{matrix.type}}/
-        file: examples/kind-with-${{matrix.type}}/tfplan.json 
+        directory: examples/kind/
+        file: examples/kind/tfplan.json 
         output_format: cli,sarif
         output_file_path: console,results.sarif
         # Ignoring checks since the original helm charts is so configure

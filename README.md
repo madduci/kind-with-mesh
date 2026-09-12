@@ -29,9 +29,13 @@ Please see the `examples`, corresponding to the type of cluster that you want to
 
 You can create a cluster from the root path of this repository, by typing one of the following commands:
 
-`make create-cluster-istio` for a KIND cluster with the Istio service mesh components
+`make create-cluster` for creating a basic KIND cluster 
 
-`make create-cluster-cilium` for a KIND cluster with the Cilium service mesh components
+`make install-cluster-istio-ambient` for installing Istio service mesh components
+
+`make install-cluster-istio-sidecare` for installing Istio service mesh components
+
+`make install-cluster-cilium` for installing Cilium service mesh components
 
 ### Running multiple clusters on the same host
 

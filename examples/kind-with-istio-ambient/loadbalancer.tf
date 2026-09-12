@@ -1,6 +1,6 @@
 # Pulls the image
 resource "docker_image" "cloud_controller_manager" {
-  name = "registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.10.0"
+  name = "registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.11.1"
 }
 
 # Create a container

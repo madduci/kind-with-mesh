@@ -19,7 +19,6 @@ resource "kubernetes_namespace_v1" "ingress" {
 }
 
 resource "kubernetes_manifest" "gateway" {
-  count = fileexists("${path.root}/kubeconfig") ? 1 : 0
   manifest = yamldecode(file("${path.root}/gateway.yaml"))
 
   depends_on = [kubernetes_namespace_v1.ingress]
@@ -36,9 +35,8 @@ resource "null_resource" "install_example" {
   provisioner "local-exec" {
     command = "kubectl apply --namespace ${kubernetes_namespace_v1.workshop.metadata[0].name} -f ${path.root}/example.yaml"
     environment = {
-      "KUBECONFIG" = module.kind.kubeconfig_path
+      "KUBECONFIG" = var.kubeconfig_path
     }
-
   }
 }
 
