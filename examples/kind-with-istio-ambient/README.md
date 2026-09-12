@@ -68,36 +68,35 @@ and all the resources will be deleted.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8.0 |
-| <a name="requirement_docker"></a> [docker](#requirement\_docker) | 3.9.0 |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.1.1 |
-| <a name="requirement_kind"></a> [kind](#requirement\_kind) | 0.11.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 3.0.1 |
-| <a name="requirement_null"></a> [null](#requirement\_null) | 3.2.4 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | 4.5.0 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | 3.3.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 3.2.1 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | 3.3.1 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_istio"></a> [istio](#module\_istio) | ../../modules/istio-mesh | n/a |
-| <a name="module_kind"></a> [kind](#module\_kind) | ../../modules/kind-cluster | n/a |
 
 ## Resources
 
 | Name | Type |
-|------|------|
-| [docker_container.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/3.9.0/docs/resources/container) | resource |
-| [docker_image.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/3.9.0/docs/resources/image) | resource |
-| [kubernetes_manifest.gateway](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/manifest) | resource |
-| [kubernetes_namespace_v1.ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
-| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/3.0.1/docs/resources/namespace_v1) | resource |
-| [null_resource.install_example](https://registry.terraform.io/providers/hashicorp/null/3.2.4/docs/resources/resource) | resource |
+| ---- | ---- |
+| [docker_container.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/4.5.0/docs/resources/container) | resource |
+| [docker_image.cloud_controller_manager](https://registry.terraform.io/providers/kreuzwerker/docker/4.5.0/docs/resources/image) | resource |
+| [kubernetes_manifest.gateway](https://registry.terraform.io/providers/hashicorp/kubernetes/3.2.1/docs/resources/manifest) | resource |
+| [kubernetes_namespace_v1.ingress](https://registry.terraform.io/providers/hashicorp/kubernetes/3.2.1/docs/resources/namespace_v1) | resource |
+| [kubernetes_namespace_v1.workshop](https://registry.terraform.io/providers/hashicorp/kubernetes/3.2.1/docs/resources/namespace_v1) | resource |
+| [null_resource.install_example](https://registry.terraform.io/providers/hashicorp/null/3.3.1/docs/resources/resource) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
+| <a name="input_kubeconfig_path"></a> [kubeconfig\_path](#input\_kubeconfig\_path) | Path to the kubeconfig file for the cluster | `string` | n/a | yes |
 | <a name="input_port_configuration"></a> [port\_configuration](#input\_port\_configuration) | Defines the port mappings for the cluster nodes | <pre>map(object({<br/>    app_protocol = string<br/>    node_port    = number<br/>    host_port    = number<br/>    target_port  = number<br/>    protocol     = string<br/>  }))</pre> | <pre>{<br/>  "http": {<br/>    "app_protocol": "http",<br/>    "host_port": 80,<br/>    "node_port": 30000,<br/>    "protocol": "TCP",<br/>    "target_port": 80<br/>  },<br/>  "https": {<br/>    "app_protocol": "https",<br/>    "host_port": 443,<br/>    "node_port": 30001,<br/>    "protocol": "TCP",<br/>    "target_port": 443<br/>  },<br/>  "status-port": {<br/>    "app_protocol": "http",<br/>    "host_port": 15021,<br/>    "node_port": 30002,<br/>    "protocol": "TCP",<br/>    "target_port": 15021<br/>  }<br/>}</pre> | no |
 
 ## Outputs
